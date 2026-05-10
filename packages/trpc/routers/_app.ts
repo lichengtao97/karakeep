@@ -10,6 +10,7 @@ import { highlightsAppRouter } from "./highlights";
 import { importSessionsRouter } from "./importSessions";
 import { invitesAppRouter } from "./invites";
 import { listsAppRouter } from "./lists";
+import { platformCredentialsAppRouter } from "./platformCredentials";
 import { promptsAppRouter } from "./prompts";
 import { publicBookmarks } from "./publicBookmarks";
 import { rulesAppRouter } from "./rules";
@@ -23,6 +24,7 @@ export const appRouter = router({
   apiKeys: apiKeysAppRouter,
   users: usersAppRouter,
   lists: listsAppRouter,
+  platformCredentials: platformCredentialsAppRouter,
   tags: tagsAppRouter,
   prompts: promptsAppRouter,
   admin: adminAppRouter,

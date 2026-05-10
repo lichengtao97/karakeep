@@ -24,9 +24,50 @@ describe("platform adapter registry", () => {
     ).toBe("x");
   });
 
+  test("matches Douyin share, short, video, and note URLs", () => {
+    expect(findPlatformAdapter("https://v.douyin.com/iABC123/")?.id).toBe(
+      "douyin",
+    );
+    expect(
+      findPlatformAdapter("https://www.iesdouyin.com/share/video/123/")?.id,
+    ).toBe("douyin");
+    expect(
+      findPlatformAdapter("https://www.iesdouyin.com/share/slides/123/")?.id,
+    ).toBe("douyin");
+    expect(findPlatformAdapter("https://www.douyin.com/video/123")?.id).toBe(
+      "douyin",
+    );
+    expect(findPlatformAdapter("https://www.douyin.com/note/123")?.id).toBe(
+      "douyin",
+    );
+    expect(
+      findPlatformAdapter("https://www.douyin.com/discover?modal_id=123")?.id,
+    ).toBe("douyin");
+  });
+
+  test("matches Xiaohongshu short, explore, and discovery item URLs", () => {
+    expect(findPlatformAdapter("https://xhslink.com/a/abc123")?.id).toBe(
+      "xiaohongshu",
+    );
+    expect(
+      findPlatformAdapter("https://www.xiaohongshu.com/explore/abc123")?.id,
+    ).toBe("xiaohongshu");
+    expect(
+      findPlatformAdapter(
+        "https://m.xiaohongshu.com/discovery/item/abc123?xsec_token=token",
+      )?.id,
+    ).toBe("xiaohongshu");
+  });
+
   test("does not match generic URLs", () => {
     expect(findPlatformAdapter("https://example.com/s/example")).toBeNull();
     expect(findPlatformAdapter("https://x.com/example")).toBeNull();
+    expect(
+      findPlatformAdapter("https://www.douyin.com/user/example"),
+    ).toBeNull();
+    expect(
+      findPlatformAdapter("https://www.xiaohongshu.com/user/profile/abc"),
+    ).toBeNull();
   });
 
   test("keeps adapters sorted by priority", () => {

@@ -89,6 +89,8 @@ const allEnv = z.object({
   OCR_USE_LLM: stringBool("false"),
   ADAPTER_TIMEOUT_MS: z.coerce.number().default(8000),
   ADAPTER_DEFAULT_RATE_LIMIT: z.coerce.number().default(5),
+  ADAPTER_ASYNC_MEDIA_DOWNLOADS: stringBool("false"),
+  XHS_USER_COOKIE: z.string().optional(),
   CRAWLER_HEADLESS_BROWSER: stringBool("true"),
   BROWSER_WEB_URL: z.string().optional(),
   BROWSER_WEBSOCKET_URL: z.string().optional(),
@@ -331,6 +333,8 @@ const serverConfigSchema = allEnv.transform((val, ctx) => {
     adapters: {
       timeoutMs: val.ADAPTER_TIMEOUT_MS,
       defaultRateLimit: val.ADAPTER_DEFAULT_RATE_LIMIT,
+      asyncMediaDownloads: val.ADAPTER_ASYNC_MEDIA_DOWNLOADS,
+      xhsUserCookie: val.XHS_USER_COOKIE,
     },
     crawler: {
       numWorkers: val.CRAWLER_NUM_WORKERS,

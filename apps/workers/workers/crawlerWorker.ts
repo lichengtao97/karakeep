@@ -45,6 +45,7 @@ import {
   assets,
   AssetTypes,
   adapterExtractionLog,
+  asyncMediaDownloads,
   bookmarkAssets,
   bookmarkLinks,
   bookmarks,
@@ -53,6 +54,7 @@ import {
 import {
   addLogFields,
   AssetPreprocessingQueue,
+  AsyncMediaDownloadQueue,
   getTracer,
   OpenAIQueue,
   QuotaService,
@@ -1871,6 +1873,34 @@ async function rewriteExtractedContentImages(
   const headers = extracted.imageReferer
     ? { Referer: extracted.imageReferer }
     : undefined;
+
+  if (serverConfig.adapters.asyncMediaDownloads) {
+    for (const image of images) {
+      const [download] = await db
+        .insert(asyncMediaDownloads)
+        .values({
+          bookmarkId,
+          userId,
+          sourceUrl: image.url,
+          referer: extracted.imageReferer ?? null,
+          target: "inline",
+          status: "pending",
+        })
+        .onConflictDoNothing()
+        .returning({ id: asyncMediaDownloads.id });
+      if (download) {
+        await AsyncMediaDownloadQueue.enqueue(
+          { downloadId: download.id },
+          { groupId: userId },
+        );
+      }
+      image.element.setAttribute("data-karakeep-async-media", "pending");
+    }
+    return {
+      htmlContent: dom.window.document.body.innerHTML,
+      imageErrors,
+    };
+  }
 
   for (const image of images) {
     const downloaded = await downloadAndStoreImage(

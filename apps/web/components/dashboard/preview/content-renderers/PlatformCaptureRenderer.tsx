@@ -29,6 +29,10 @@ function getImageCount(link: ZBookmarkedLink) {
   return Array.isArray(imageList) ? imageList.length : null;
 }
 
+function formatPlatformDate(date: Date) {
+  return date.toISOString().slice(0, 10);
+}
+
 function canRenderPlatformCapture(bookmark: ZBookmark): boolean {
   return (
     bookmark.content.type === BookmarkTypes.LINK && !!bookmark.content.platform
@@ -72,7 +76,7 @@ function PlatformCaptureRendererComponent({
             )}
             {link.datePublished && (
               <time dateTime={link.datePublished.toISOString()}>
-                {link.datePublished.toLocaleDateString()}
+                {formatPlatformDate(link.datePublished)}
               </time>
             )}
           </div>

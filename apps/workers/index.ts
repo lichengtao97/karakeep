@@ -5,6 +5,7 @@ import { buildServer } from "server";
 import {
   AdminMaintenanceQueue,
   AssetPreprocessingQueue,
+  AsyncMediaDownloadQueue,
   BackupQueue,
   FeedQueue,
   initEventLogger,
@@ -16,6 +17,7 @@ import {
   prepareQueue,
   RuleEngineQueue,
   SearchIndexingQueue,
+  SemanticIndexingQueue,
   shutdownEventLogger,
   shutdownTracing,
   startQueue,
@@ -28,6 +30,7 @@ import logger from "@karakeep/shared/logger";
 import { shutdownPromise } from "./exit";
 import { AdminMaintenanceWorker } from "./workers/adminMaintenanceWorker";
 import { AssetPreprocessingWorker } from "./workers/assetPreprocessingWorker";
+import { AsyncMediaDownloadWorker } from "./workers/asyncMediaDownloadWorker";
 import { BackupSchedulingWorker, BackupWorker } from "./workers/backupWorker";
 import { CrawlerWorker } from "./workers/crawlerWorker";
 import { FeedRefreshingWorker, FeedWorker } from "./workers/feedWorker";
@@ -35,6 +38,7 @@ import { ImportWorker } from "./workers/importWorker";
 import { OpenAiWorker } from "./workers/inference/inferenceWorker";
 import { RuleEngineWorker } from "./workers/ruleEngineWorker";
 import { SearchIndexingWorker } from "./workers/searchWorker";
+import { SemanticIndexingWorker } from "./workers/semanticIndexingWorker";
 import { VideoWorker } from "./workers/videoWorker";
 import { WebhookWorker } from "./workers/webhookWorker";
 
@@ -55,6 +59,10 @@ const workerBuilders = {
     await SearchIndexingQueue.ensureInit();
     return SearchIndexingWorker.build();
   },
+  semanticIndexing: async () => {
+    await SemanticIndexingQueue.ensureInit();
+    return SemanticIndexingWorker.build();
+  },
   adminMaintenance: async () => {
     await AdminMaintenanceQueue.ensureInit();
     return AdminMaintenanceWorker.build();
@@ -70,6 +78,10 @@ const workerBuilders = {
   assetPreprocessing: async () => {
     await AssetPreprocessingQueue.ensureInit();
     return AssetPreprocessingWorker.build();
+  },
+  asyncMediaDownload: async () => {
+    await AsyncMediaDownloadQueue.ensureInit();
+    return AsyncMediaDownloadWorker.build();
   },
   webhook: async () => {
     await WebhookQueue.ensureInit();

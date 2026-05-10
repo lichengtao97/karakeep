@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
 import UploadDropzone from "@/components/dashboard/UploadDropzone";
 import { useSortOrderStore } from "@/lib/store/useSortOrderStore";
 import { useInfiniteQuery } from "@tanstack/react-query";
@@ -33,7 +32,7 @@ export default function UpdatableBookmarksGrid({
 
   const finalQuery = { ...query, sortOrder, includeContent: false };
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } =
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery(
       api.bookmarks.getBookmarks.infiniteQueryOptions(
         { ...finalQuery, useCursorV2: true },
@@ -44,14 +43,10 @@ export default function UpdatableBookmarksGrid({
           }),
           initialCursor: null,
           getNextPageParam: (lastPage) => lastPage.nextCursor,
-          refetchOnMount: true,
+          refetchOnMount: false,
         },
       ),
     );
-
-  useEffect(() => {
-    refetch();
-  }, [sortOrder, refetch]);
 
   const grid = (
     <BookmarksGrid

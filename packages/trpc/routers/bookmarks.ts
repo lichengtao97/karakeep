@@ -7,6 +7,8 @@ import type { ZBookmarkTags } from "@karakeep/shared/types/tags";
 import {
   assets,
   AssetTypes,
+  bookmarkChunks,
+  bookmarkEmbeddings,
   bookmarkAssets,
   bookmarkLinks,
   bookmarks,
@@ -38,6 +40,11 @@ import { EnqueueOptions } from "@karakeep/shared/queueing";
 import { getRateLimitClient } from "@karakeep/shared/ratelimiting";
 import { FilterQuery, getSearchClient } from "@karakeep/shared/search";
 import { parseSearchQuery } from "@karakeep/shared/searchQueryParser";
+import {
+  bufferToEmbedding,
+  cosineSimilarity,
+  reciprocalRankFusion,
+} from "@karakeep/shared/semanticSearch";
 import {
   BookmarkTypes,
   DEFAULT_NUM_BOOKMARKS_PER_PAGE,
@@ -898,6 +905,117 @@ export const bookmarksAppRouter = router({
                 ver: 1 as const,
                 offset: resp.hits.length + (input.cursor?.offset || 0),
               },
+      };
+    }),
+  semanticSearchBookmarks: bookmarksProcedure
+    .use(createBookmarksQueriedMiddleware())
+    .use(createEventLogMiddleware("search.query"))
+    .input(
+      z.object({
+        text: z.string().min(1),
+        limit: z.number().max(DEFAULT_NUM_BOOKMARKS_PER_PAGE).optional(),
+        includeContent: z.boolean().optional().default(false),
+      }),
+    )
+    .output(
+      z.object({
+        bookmarks: z.array(zBookmarkSchema),
+        hits: z.array(
+          z.object({
+            bookmarkId: z.string(),
+            score: z.number(),
+            chunk: z.string().nullable(),
+          }),
+        ),
+      }),
+    )
+    .query(async ({ input, ctx }) => {
+      const limit = input.limit ?? DEFAULT_NUM_BOOKMARKS_PER_PAGE;
+      const inferenceClient = InferenceClientFactory.build();
+      if (!inferenceClient) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Inference functionality is not configured",
+        });
+      }
+
+      const queryEmbedding = (
+        await inferenceClient.generateEmbeddingFromText([input.text])
+      ).embeddings[0];
+      const rows = await ctx.db
+        .select({
+          bookmarkId: bookmarkEmbeddings.bookmarkId,
+          embedding: bookmarkEmbeddings.embedding,
+          chunk: bookmarkChunks.content,
+        })
+        .from(bookmarkEmbeddings)
+        .innerJoin(
+          bookmarkChunks,
+          eq(bookmarkChunks.id, bookmarkEmbeddings.chunkId),
+        )
+        .where(
+          and(
+            eq(bookmarkEmbeddings.userId, ctx.user.id),
+            eq(bookmarkEmbeddings.model, serverConfig.embedding.textModel),
+          ),
+        );
+
+      const bestVectorHits = new Map<
+        string,
+        { score: number; chunk: string | null }
+      >();
+      for (const row of rows) {
+        const score = cosineSimilarity(
+          queryEmbedding,
+          bufferToEmbedding(row.embedding),
+        );
+        const previous = bestVectorHits.get(row.bookmarkId);
+        if (!previous || score > previous.score) {
+          bestVectorHits.set(row.bookmarkId, { score, chunk: row.chunk });
+        }
+      }
+
+      const vectorRanked = Array.from(bestVectorHits.entries())
+        .sort((a, b) => b[1].score - a[1].score)
+        .slice(0, limit * 4)
+        .map(([bookmarkId]) => bookmarkId);
+
+      const searchClient = await getSearchClient();
+      const bm25Ranked = searchClient
+        ? (
+            await searchClient.search({
+              query: input.text,
+              filter: [{ type: "eq", field: "userId", value: ctx.user.id }],
+              limit: limit * 4,
+            })
+          ).hits.map((hit) => hit.id)
+        : [];
+
+      const fusedScores = reciprocalRankFusion([vectorRanked, bm25Ranked]);
+      const bookmarkIds = Array.from(fusedScores.entries())
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, limit)
+        .map(([bookmarkId]) => bookmarkId);
+
+      if (bookmarkIds.length === 0) {
+        return { bookmarks: [], hits: [] };
+      }
+
+      const { bookmarks: loaded } = await Bookmark.loadMulti(ctx, {
+        ids: bookmarkIds,
+        includeContent: input.includeContent,
+        sortOrder: "desc",
+      });
+      const order = new Map(bookmarkIds.map((id, index) => [id, index]));
+      loaded.sort((a, b) => order.get(a.id)! - order.get(b.id)!);
+
+      return {
+        bookmarks: loaded.map((bookmark) => bookmark.asZBookmark()),
+        hits: bookmarkIds.map((bookmarkId) => ({
+          bookmarkId,
+          score: fusedScores.get(bookmarkId) ?? 0,
+          chunk: bestVectorHits.get(bookmarkId)?.chunk ?? null,
+        })),
       };
     }),
   checkUrl: bookmarksProcedure

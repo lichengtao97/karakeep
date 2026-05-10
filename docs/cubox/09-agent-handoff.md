@@ -199,85 +199,217 @@ INFERENCE_JOB_TIMEOUT_SEC=120
 
 ## 6. 后续阶段建议
 
-### M3：X / Twitter 适配器
+### M3：X / Twitter 适配器与平台预览闭环
 
-建议目标：
+已完成：
 
-- 命中 `x.com/*/status/*`、`twitter.com/*/status/*`。
-- 优先抽取 tweet 文本、作者、发布时间、媒体图。
-- 无登录场景先覆盖公开 tweet。
-- 登录/cookie 支持后置，避免过早引入凭据表。
-- 失败时回退通用抓取。
+- 新增 X/Twitter 平台适配器。
+- 命中：
+  - `x.com/*/status/*`
+  - `twitter.com/*/status/*`
+  - `mobile.twitter.com/*/status/*`
+  - `twitter.com/*/statuses/*`
+- 支持从公开 HTML 中抽取：
+  - tweet 文本
+  - 作者
+  - 媒体图片
+  - `tweetId`
+  - `handle`
+- 支持解析 Open Graph / Twitter meta 和 JSON-LD。
+- 使用 tweet Snowflake ID 兜底推算发布时间。
+- 将 tweet 内容构造成 Karakeep 可缓存的 HTML，正文图片继续复用 crawler 的 assetdb 转存与 `/api/assets/{assetId}` 改写链路。
+- 失败时沿用平台适配器框架回退 Karakeep 通用抓取链路。
+- 不引入登录/cookie 支持；凭据架构仍留给小红书等后续阶段。
+- 将平台提取元数据暴露给 bookmark link API / tRPC：
+  - `content.platform`
+  - `content.rawExtraction`
+  - `content.adapterVersion`
+- 新增前端 `Platform Capture` 预览：
+  - 当 bookmark 存在 `content.platform` 时优先出现。
+  - 默认展示 Karakeep 缓存/转存后的正文与图片。
+  - X 原有 `react-tweet` 远程 embed 保留为可选对比视图。
+- 增强 Admin Bookmark Debugger：
+  - 展示 `platform/rawExtraction/adapterVersion`。
+  - 展示最近 10 条 `adapterExtractionLog`，含 adapter、version、latency、success/failure、error、createdAt。
 
-建议文件：
+关键文件：
 
-- 新增 `apps/workers/workers/adapters/x.ts`
-- 新增 `apps/workers/workers/adapters/x.test.ts`
-- 注册到 `apps/workers/workers/adapters/registry.ts`
+- `apps/workers/workers/adapters/x.ts`
+- `apps/workers/workers/adapters/x.test.ts`
+- `apps/workers/workers/adapters/registry.ts`
+- `packages/shared/types/bookmarks.ts`
+- `packages/trpc/models/bookmarks.ts`
+- `packages/trpc/routers/bookmarks.test.ts`
+- `apps/web/components/dashboard/preview/content-renderers/PlatformCaptureRenderer.tsx`
+- `apps/web/components/dashboard/preview/content-renderers/index.ts`
+- `apps/web/components/admin/BookmarkDebugger.tsx`
+- `packages/trpc/routers/admin.ts`
+- `packages/trpc/routers/admin.test.ts`
 
-验收：
+验证记录：
 
-- URL match 单测。
-- fixture 解析单测。
-- 多图媒体列表非空。
-- 适配器失败回退通用链路。
+- `env -u NO_COLOR corepack pnpm --filter @karakeep/workers exec vitest run workers/adapters`
+- `env -u NO_COLOR corepack pnpm --filter @karakeep/trpc exec vitest run routers/admin.test.ts routers/bookmarks.test.ts`
+- `corepack pnpm --filter @karakeep/shared run typecheck`
+- `corepack pnpm --filter @karakeep/trpc run typecheck`
+- `corepack pnpm --filter @karakeep/web run typecheck`
+- `corepack pnpm --filter @karakeep/workers run typecheck`
+- 相关 lint 和 oxfmt check 已通过。
 
 ### M4：抖音适配器
 
-建议目标：
+已完成：
 
-- 命中 `douyin.com` 常见分享链接和短链解析后的视频/图文链接。
-- 先支持公开页面元数据、标题、作者、封面、正文/描述。
-- 视频下载继续沿用现有 video worker，不在适配器里做大文件下载。
-- 如果需要浏览器渲染，复用 crawler worker 的 Playwright 路径，不新增独立浏览器池。
+- 新增抖音平台适配器。
+- 命中：
+  - `v.douyin.com/*`
+  - `iesdouyin.com/share/(video|note|slides)/*`
+  - `www.iesdouyin.com/share/(video|note|slides)/*`
+  - `douyin.com/(video|note)/*`
+  - `www.douyin.com/(video|note)/*`
+  - `www.douyin.com/discover?modal_id=*`
+- 支持从公开页面中抽取：
+  - 标题/正文描述
+  - 作者
+  - 发布时间
+  - 封面
+  - 图文/图集图片
+  - BGM 标题摘要
+- 支持解析：
+  - URL 编码的 `<script id="RENDER_DATA">`
+  - `window._ROUTER_DATA` 等 hydration JSON
+  - JSON-LD
+  - Open Graph / Twitter meta fallback
+- 将抖音内容构造成 Karakeep 可缓存的 HTML，封面和正文图片继续复用 crawler 的 assetdb 转存与 `/api/assets/{assetId}` 改写链路。
+- 视频只记录是否存在公开播放地址和数量摘要，不在 adapter 内做大文件下载；视频下载继续留给现有 video worker / yt-dlp 链路。
+- 不引入登录/cookie 支持，不新增独立浏览器池；失败时沿用平台适配器框架回退 Karakeep 通用抓取链路。
+
+关键文件：
+
+- `apps/workers/workers/adapters/douyin.ts`
+- `apps/workers/workers/adapters/douyin.test.ts`
+- `apps/workers/workers/adapters/registry.ts`
+- `apps/workers/workers/adapters/registry.test.ts`
+
+验证记录：
+
+- `env -u NO_COLOR corepack pnpm --filter @karakeep/workers exec vitest run workers/adapters`
+- `corepack pnpm --filter @karakeep/workers run typecheck`
+- `corepack pnpm --filter @karakeep/workers run lint`
+- `corepack pnpm exec oxfmt --check apps/workers/workers/adapters/registry.ts apps/workers/workers/adapters/registry.test.ts apps/workers/workers/adapters/douyin.ts apps/workers/workers/adapters/douyin.test.ts docs/cubox/09-agent-handoff.md`
 
 风险：
 
-- 短链跳转、反爬、移动端 HTML 差异。
-- 需要明确超时和失败降级策略。
+- 短链跳转、反爬、移动端 HTML 差异仍可能导致部分真实页面只能走 fallback。
+- Douyin hydration JSON 字段可能变化，解析层已做多字段容错，但后续需要用真实黄金集持续补 fixture。
+- 超时和失败降级沿用现有适配器框架；后续仍需要用真实站点压测确认阈值。
 
 ### M5：小红书适配器
 
-建议目标：
+已完成：
 
-- 命中 `xiaohongshu.com`、`xhslink.com`。
-- 支持图文笔记：标题、作者、正文、话题、封面、图片列表。
-- 小红书可能需要 cookie，凭据管理可在此阶段启动。
+- 新增小红书平台适配器。
+- 命中：
+  - `xhslink.com/*`
+  - `www.xiaohongshu.com/explore/*`
+  - `m.xiaohongshu.com/discovery/item/*`
+- 支持从公开页面中抽取：
+  - 笔记标题
+  - 正文描述
+  - 作者
+  - 发布时间
+  - 话题标签
+  - 封面和图集图片
+  - 视频笔记是否存在视频地址摘要
+- 支持解析：
+  - `window.__INITIAL_STATE__`
+  - Open Graph / Twitter meta fallback
+- 将小红书内容构造成 Karakeep 可缓存的 HTML，图片继续复用 crawler assetdb 转存链路。
+- 视频只记录是否存在公开视频地址，不在 adapter 内做大文件下载。
+- 新增用户级平台凭据存储：
+  - `platformCredentials` 表。
+  - tRPC `platformCredentials.get/upsert/delete`。
+  - cookie 使用 `NEXTAUTH_SECRET` 派生密钥加密存储。
+  - 适配器按 `userId` 注入用户 cookie，未配置时回退 `XHS_USER_COOKIE`。
+- 不把 cookie/API key 写入日志、fixture 或文档。
 
-可能需要新增：
+关键文件：
 
-- `platform_credentials` 或等价凭据存储。
-- 设置页入口。
-- 凭据加密和日志脱敏。
+- `apps/workers/workers/adapters/xiaohongshu.ts`
+- `apps/workers/workers/adapters/xiaohongshu.test.ts`
+- `packages/shared/platformCredentials.ts`
+- `packages/trpc/routers/platformCredentials.ts`
+- `packages/trpc/routers/platformCredentials.test.ts`
+- `packages/db/schema.ts`
+- `packages/db/drizzle/0086_loose_shockwave.sql`
 
-不要在 M3/M4 提前做小红书 cookie 架构，避免过度设计。
+限制：
+
+- 暂未新增设置页 UI；当前通过 tRPC/API 写入凭据，后续可补一个设置页表单。
+- 未接 PC 签名 API，不做 `x-s` / `x-t`。
 
 ### M6：媒体异步管线
 
-触发条件：
+已完成：
 
-- 如果微信/小红书长图文同步下载导致 P95 超过目标，再做。
+- 新增 `asyncMediaDownloads` 表记录异步图片下载任务。
+- 新增 `AsyncMediaDownloadQueue` 和 `asyncMediaDownload` worker。
+- 新增配置 `ADAPTER_ASYNC_MEDIA_DOWNLOADS`：
+  - 默认 `false`，保持现有同步转存行为稳定。
+  - 开启后，平台 adapter 正文图片先保留原 URL 和 `data-karakeep-async-media="pending"`，主 crawl job 不等待图片下载。
+  - 后台 worker 下载图片、写入 assetdb，并把 `bookmarkLinks.htmlContent` 中的图片 URL 改写为 `/api/assets/{assetId}`。
+- 图片请求继续走 `fetchWithProxy`，保持 SSRF 校验和代理支持。
+- 下载失败写入任务状态，不阻塞卡片和正文可见。
 
-建议目标：
+关键文件：
 
-- 主链路先写卡片、正文和原始图片 URL。
-- 图片下载迁入独立 worker。
-- 下载完成后更新 HTML 或维护映射表。
-- 不破坏当前同步下载的阅读稳定性。
+- `apps/workers/workers/asyncMediaDownloadWorker.ts`
+- `apps/workers/workers/crawlerWorker.ts`
+- `packages/shared-server/src/queues.ts`
+- `packages/db/schema.ts`
+- `packages/db/drizzle/0086_loose_shockwave.sql`
+
+限制：
+
+- 当前只异步处理 adapter 正文 inline images；banner 仍沿用现有同步下载路径。
+- 大 HTML 已转存到 content asset 时，异步 worker 暂不改写 asset 内 HTML；默认配置仍保持同步路径避免这个边界影响现有体验。
 
 ### M7：语义检索
 
-建议目标：
+已完成：
 
-- 在 `packages/shared/inference.ts` 增加 embedding 接口。
-- 新增内容 chunk、embedding 存储和重建 worker。
-- 搜索 API 保持 BM25 路径不变，新增 semantic procedure。
-- 融合检索可使用 RRF。
+- 复用既有 `packages/shared/inference.ts` embedding 接口：
+  - OpenAI 走 `openAI.embeddings.create`。
+  - Ollama 走 `ollama.embed`。
+  - 没有绕过 inference provider 体系。
+- 新增语义索引存储：
+  - `bookmarkChunks`
+  - `bookmarkEmbeddings`
+- 新增 `SemanticIndexingQueue` 和 `semanticIndexing` worker：
+  - `triggerSearchReindex` 会同步触发 BM25 index 和 semantic index。
+  - bookmark 删除时同步 enqueue semantic delete。
+  - chunk 策略为固定字符窗口 + overlap。
+- 新增 `bookmarks.semanticSearchBookmarks` tRPC procedure：
+  - query 先 embedding。
+  - SQLite 中读取同模型 embeddings，应用层 cosine top-K。
+  - 如果 Meilisearch 已配置，同时取 BM25 top-K。
+  - 使用 RRF 融合后返回 bookmark 和命中 chunk。
+- 向量存储使用 SQLite BLOB + Float32Array，暂不引入 `sqlite-vec` 扩展，避免新增部署依赖。
 
-注意：
+关键文件：
 
-- 向量存储优先评估 SQLite 方案。
-- 不要直接绕过现有 inference provider 体系调用外部 API。
+- `packages/shared/semanticSearch.ts`
+- `packages/shared/semanticSearch.test.ts`
+- `apps/workers/workers/semanticIndexingWorker.ts`
+- `packages/trpc/routers/bookmarks.ts`
+- `packages/shared-server/src/queues.ts`
+- `packages/db/schema.ts`
+- `packages/db/drizzle/0086_loose_shockwave.sql`
+
+限制：
+
+- 暂未新增前端智能搜索 toggle；当前先提供 tRPC procedure 供前端接入。
+- 当前为 SQLite BLOB 应用层余弦，适合 MVP 和中小规模验证；10 万 chunks 级别建议继续评估 `sqlite-vec`。
 
 ## 7. Agent 开发规则
 
@@ -331,13 +463,12 @@ npx pnpm@9.15.9 --filter @karakeep/trpc run typecheck
 
 推荐下一位 agent 优先做：
 
-1. M3 X / Twitter 适配器：与 M1 适配器底座最直接衔接，风险中等。
-2. M5 小红书凭据设计草案：先做 schema/设置入口设计评审，不急着写复杂抓取。
-3. M7 语义检索技术 spike：评估 SQLite 向量方案和 embedding provider 接口。
+1. 补前端入口：小红书凭据设置页和搜索框“全文 / 智能”切换。
+2. 用真实黄金集验证小红书、抖音、微信长图文抓取质量和 P95。
+3. 评估 `sqlite-vec` 替换当前 SQLite BLOB 应用层余弦方案的收益和迁移成本。
 
 不建议立刻做：
 
 - 大规模 UI 重构。
-- 独立媒体异步管线，除非有明确 P95 数据证明同步下载不可接受。
+- 新增独立浏览器池或绕过现有 crawler Playwright 路径。
 - 绕开现有 queue/inference/search 抽象的新基础设施。
-

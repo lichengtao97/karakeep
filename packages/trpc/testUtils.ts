@@ -114,6 +114,9 @@ export function defaultBeforeEach(seedDB = true) {
         SearchIndexingQueue: {
           enqueue: vi.fn(),
         },
+        SemanticIndexingQueue: {
+          enqueue: vi.fn(),
+        },
         RuleEngineQueue: {
           enqueue: vi.fn(),
         },

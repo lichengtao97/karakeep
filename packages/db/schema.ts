@@ -3,6 +3,7 @@ import { createId } from "@paralleldrive/cuid2";
 import { relations, sql, SQL } from "drizzle-orm";
 import {
   AnySQLiteColumn,
+  blob,
   foreignKey,
   index,
   integer,
@@ -304,6 +305,118 @@ export const adapterExtractionLog = sqliteTable(
       ael.adapter,
       ael.createdAt,
     ),
+  ],
+);
+
+export const platformCredentials = sqliteTable(
+  "platformCredentials",
+  {
+    id: text("id")
+      .notNull()
+      .primaryKey()
+      .$defaultFn(() => createId()),
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    platform: text("platform", { enum: ["xiaohongshu"] }).notNull(),
+    credentialType: text("credentialType", { enum: ["cookie"] }).notNull(),
+    encryptedValue: text("encryptedValue").notNull(),
+    createdAt: createdAtField(),
+    modifiedAt: modifiedAtField(),
+    lastUsedAt: integer("lastUsedAt", { mode: "timestamp" }),
+  },
+  (pc) => [
+    unique().on(pc.userId, pc.platform, pc.credentialType),
+    index("platformCredentials_userId_idx").on(pc.userId),
+    index("platformCredentials_platform_idx").on(pc.platform),
+  ],
+);
+
+export const asyncMediaDownloads = sqliteTable(
+  "asyncMediaDownloads",
+  {
+    id: text("id")
+      .notNull()
+      .primaryKey()
+      .$defaultFn(() => createId()),
+    bookmarkId: text("bookmarkId")
+      .notNull()
+      .references(() => bookmarks.id, { onDelete: "cascade" }),
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    sourceUrl: text("sourceUrl").notNull(),
+    referer: text("referer"),
+    target: text("target", { enum: ["inline", "banner"] }).notNull(),
+    status: text("status", {
+      enum: ["pending", "success", "failure"],
+    })
+      .notNull()
+      .default("pending"),
+    assetId: text("assetId"),
+    error: text("error"),
+    attempts: integer("attempts").notNull().default(0),
+    createdAt: createdAtField(),
+    modifiedAt: modifiedAtField(),
+  },
+  (amd) => [
+    index("asyncMediaDownloads_bookmarkId_idx").on(amd.bookmarkId),
+    index("asyncMediaDownloads_user_status_idx").on(amd.userId, amd.status),
+    unique().on(amd.bookmarkId, amd.sourceUrl, amd.target),
+  ],
+);
+
+export const bookmarkChunks = sqliteTable(
+  "bookmarkChunks",
+  {
+    id: text("id")
+      .notNull()
+      .primaryKey()
+      .$defaultFn(() => createId()),
+    bookmarkId: text("bookmarkId")
+      .notNull()
+      .references(() => bookmarks.id, { onDelete: "cascade" }),
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    idx: integer("idx").notNull(),
+    content: text("content").notNull(),
+    tokenCount: integer("tokenCount").notNull(),
+    contentHash: text("contentHash").notNull(),
+    createdAt: createdAtField(),
+  },
+  (bc) => [
+    unique().on(bc.bookmarkId, bc.idx),
+    index("bookmarkChunks_bookmarkId_idx").on(bc.bookmarkId),
+    index("bookmarkChunks_userId_idx").on(bc.userId),
+  ],
+);
+
+export const bookmarkEmbeddings = sqliteTable(
+  "bookmarkEmbeddings",
+  {
+    id: text("id")
+      .notNull()
+      .primaryKey()
+      .$defaultFn(() => createId()),
+    chunkId: text("chunkId")
+      .notNull()
+      .references(() => bookmarkChunks.id, { onDelete: "cascade" }),
+    bookmarkId: text("bookmarkId")
+      .notNull()
+      .references(() => bookmarks.id, { onDelete: "cascade" }),
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    model: text("model").notNull(),
+    dim: integer("dim").notNull(),
+    embedding: blob("embedding", { mode: "buffer" }).notNull(),
+    createdAt: createdAtField(),
+  },
+  (be) => [
+    unique().on(be.chunkId, be.model),
+    index("bookmarkEmbeddings_bookmarkId_idx").on(be.bookmarkId),
+    index("bookmarkEmbeddings_user_model_idx").on(be.userId, be.model),
   ],
 );
 
@@ -1004,6 +1117,9 @@ export const userRelations = relations(users, ({ many, one }) => ({
   listCollaborations: many(listCollaborators),
   backups: many(backupsTable),
   listInvitations: many(listInvitations),
+  platformCredentials: many(platformCredentials),
+  bookmarkChunks: many(bookmarkChunks),
+  bookmarkEmbeddings: many(bookmarkEmbeddings),
 }));
 
 export const bookmarkRelations = relations(bookmarks, ({ many, one }) => ({
@@ -1028,7 +1144,67 @@ export const bookmarkRelations = relations(bookmarks, ({ many, one }) => ({
   assets: many(assets),
   rssFeeds: many(rssFeedImportsTable),
   importSessionBookmarks: many(importSessionBookmarks),
+  asyncMediaDownloads: many(asyncMediaDownloads),
+  chunks: many(bookmarkChunks),
+  embeddings: many(bookmarkEmbeddings),
 }));
+
+export const platformCredentialsRelations = relations(
+  platformCredentials,
+  ({ one }) => ({
+    user: one(users, {
+      fields: [platformCredentials.userId],
+      references: [users.id],
+    }),
+  }),
+);
+
+export const asyncMediaDownloadsRelations = relations(
+  asyncMediaDownloads,
+  ({ one }) => ({
+    bookmark: one(bookmarks, {
+      fields: [asyncMediaDownloads.bookmarkId],
+      references: [bookmarks.id],
+    }),
+    user: one(users, {
+      fields: [asyncMediaDownloads.userId],
+      references: [users.id],
+    }),
+  }),
+);
+
+export const bookmarkChunksRelations = relations(
+  bookmarkChunks,
+  ({ one, many }) => ({
+    bookmark: one(bookmarks, {
+      fields: [bookmarkChunks.bookmarkId],
+      references: [bookmarks.id],
+    }),
+    user: one(users, {
+      fields: [bookmarkChunks.userId],
+      references: [users.id],
+    }),
+    embeddings: many(bookmarkEmbeddings),
+  }),
+);
+
+export const bookmarkEmbeddingsRelations = relations(
+  bookmarkEmbeddings,
+  ({ one }) => ({
+    chunk: one(bookmarkChunks, {
+      fields: [bookmarkEmbeddings.chunkId],
+      references: [bookmarkChunks.id],
+    }),
+    bookmark: one(bookmarks, {
+      fields: [bookmarkEmbeddings.bookmarkId],
+      references: [bookmarks.id],
+    }),
+    user: one(users, {
+      fields: [bookmarkEmbeddings.userId],
+      references: [users.id],
+    }),
+  }),
+);
 
 export const assetRelations = relations(assets, ({ one }) => ({
   bookmark: one(bookmarks, {

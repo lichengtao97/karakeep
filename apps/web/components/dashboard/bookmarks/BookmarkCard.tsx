@@ -31,6 +31,13 @@ export default function BookmarkCard({
           }
           return getBookmarkRefreshInterval(data);
         },
+        refetchOnMount: (query) => {
+          const data = query.state.data;
+          if (!data) {
+            return true;
+          }
+          return getBookmarkRefreshInterval(data) !== false;
+        },
       },
     ),
   );

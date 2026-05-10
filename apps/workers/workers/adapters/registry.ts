@@ -1,4 +1,6 @@
+import { douyinAdapter } from "./douyin";
 import { xAdapter } from "./x";
+import { xiaohongshuAdapter } from "./xiaohongshu";
 import { wechatAdapter } from "./wechat";
 
 import type { PlatformAdapter } from "./types";
@@ -6,6 +8,8 @@ import type { PlatformAdapter } from "./types";
 export const platformAdapters: PlatformAdapter[] = [
   wechatAdapter,
   xAdapter,
+  douyinAdapter,
+  xiaohongshuAdapter,
 ].sort((a, b) => b.priority - a.priority);
 
 export function findPlatformAdapter(url: string): PlatformAdapter | null {

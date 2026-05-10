@@ -148,6 +148,22 @@ export const SearchIndexingQueue = createDeferredQueue<ZSearchIndexingRequest>(
   },
 );
 
+// Semantic Indexing Worker
+export const zSemanticIndexingRequestSchema = z.object({
+  bookmarkId: z.string(),
+  type: z.enum(["index", "delete"]),
+});
+export type ZSemanticIndexingRequest = z.infer<
+  typeof zSemanticIndexingRequestSchema
+>;
+export const SemanticIndexingQueue =
+  createDeferredQueue<ZSemanticIndexingRequest>("semantic_indexing_queue", {
+    defaultJobArgs: {
+      numRetries: 3,
+    },
+    keepFailedJobs: false,
+  });
+
 // Admin maintenance worker
 export const zTidyAssetsRequestSchema = z.object({
   cleanDanglingAssets: z.boolean().optional().default(false),
@@ -200,6 +216,16 @@ export async function triggerSearchReindex(
       idempotencyKey: `index:${bookmarkId}`,
     },
   );
+  await SemanticIndexingQueue.enqueue(
+    {
+      bookmarkId,
+      type: "index",
+    },
+    {
+      ...opts,
+      idempotencyKey: `semantic-index:${bookmarkId}`,
+    },
+  );
 }
 
 export const zvideoRequestSchema = z.object({
@@ -247,6 +273,24 @@ export const AssetPreprocessingQueue =
     },
     keepFailedJobs: false,
   });
+
+// Async Platform Media Downloads
+export const zAsyncMediaDownloadRequestSchema = z.object({
+  downloadId: z.string(),
+});
+export type ZAsyncMediaDownloadRequest = z.infer<
+  typeof zAsyncMediaDownloadRequestSchema
+>;
+export const AsyncMediaDownloadQueue =
+  createDeferredQueue<ZAsyncMediaDownloadRequest>(
+    "async_media_download_queue",
+    {
+      defaultJobArgs: {
+        numRetries: 3,
+      },
+      keepFailedJobs: false,
+    },
+  );
 
 // Webhook worker
 export const zWebhookRequestSchema = z.object({

@@ -30,7 +30,10 @@ import {
   rssFeedImportsTable,
   tagsOnBookmarks,
 } from "@karakeep/db/schema";
-import { SearchIndexingQueue } from "@karakeep/shared-server";
+import {
+  SearchIndexingQueue,
+  SemanticIndexingQueue,
+} from "@karakeep/shared-server";
 
 import { WebhooksService } from "./webhooks.service";
 import { deleteAsset, readAsset } from "@karakeep/shared/assetdb";
@@ -957,6 +960,15 @@ export class Bookmark extends BareBookmark {
       );
 
     await SearchIndexingQueue.enqueue(
+      {
+        bookmarkId: this.bookmark.id,
+        type: "delete",
+      },
+      {
+        groupId: this.ctx.user.id,
+      },
+    );
+    await SemanticIndexingQueue.enqueue(
       {
         bookmarkId: this.bookmark.id,
         type: "delete",
