@@ -1,0 +1,1 @@
+CREATE INDEX `userReadingProgress_userId_modifiedAt_bookmarkId_idx` ON `userReadingProgress` (`userId`,`modifiedAt`,`bookmarkId`);

@@ -29,6 +29,9 @@ export default function UpdatableBookmarksGrid({
     // Relevance is not supported in the `getBookmarks` endpoint.
     sortOrder = "desc";
   }
+  if (query.readFilter === "recentlyRead") {
+    sortOrder = "desc";
+  }
 
   const finalQuery = { ...query, sortOrder, includeContent: false };
 

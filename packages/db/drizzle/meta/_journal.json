@@ -610,6 +610,13 @@
       "when": 1778342038381,
       "tag": "0086_loose_shockwave",
       "breakpoints": true
+    },
+    {
+      "idx": 87,
+      "version": "6",
+      "when": 1778927958951,
+      "tag": "0087_blue_blade",
+      "breakpoints": true
     }
   ]
 }

@@ -8,6 +8,8 @@ import {
   gt,
   gte,
   inArray,
+  isNotNull,
+  isNull,
   lt,
   lte,
   or,
@@ -29,6 +31,7 @@ import {
   bookmarkTexts,
   rssFeedImportsTable,
   tagsOnBookmarks,
+  userReadingProgress,
 } from "@karakeep/db/schema";
 import {
   SearchIndexingQueue,
@@ -502,6 +505,107 @@ export class Bookmark extends BareBookmark {
           : desc(bookmarks.createdAt),
         desc(bookmarks.id),
       ] as const;
+
+    if (input.readFilter) {
+      if (input.listId || input.tagId || input.rssFeedId) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message:
+            "Cannot combine readFilter with listId, tagId, or rssFeedId yet",
+        });
+      }
+
+      const pageRows =
+        input.readFilter === "unread"
+          ? await ctx.db
+              .select({
+                id: bookmarks.id,
+                cursorDate: bookmarks.createdAt,
+              })
+              .from(bookmarks)
+              .leftJoin(
+                userReadingProgress,
+                and(
+                  eq(userReadingProgress.bookmarkId, bookmarks.id),
+                  eq(userReadingProgress.userId, ctx.user.id),
+                ),
+              )
+              .where(
+                and(
+                  eq(bookmarks.userId, ctx.user.id),
+                  isNull(userReadingProgress.id),
+                  ...buildCommonFilters(),
+                  buildCursorCondition(bookmarks.createdAt, bookmarks.id),
+                ),
+              )
+              .limit(input.limit + 1)
+              .orderBy(...buildOrderBy())
+          : await ctx.db
+              .select({
+                id: bookmarks.id,
+                cursorDate: userReadingProgress.modifiedAt,
+              })
+              .from(userReadingProgress)
+              .innerJoin(
+                bookmarks,
+                eq(bookmarks.id, userReadingProgress.bookmarkId),
+              )
+              .where(
+                and(
+                  eq(userReadingProgress.userId, ctx.user.id),
+                  eq(bookmarks.userId, ctx.user.id),
+                  isNotNull(userReadingProgress.modifiedAt),
+                  ...buildCommonFilters(),
+                  input.cursor
+                    ? or(
+                        lt(
+                          userReadingProgress.modifiedAt,
+                          input.cursor.createdAt,
+                        ),
+                        and(
+                          eq(
+                            userReadingProgress.modifiedAt,
+                            input.cursor.createdAt,
+                          ),
+                          lte(bookmarks.id, input.cursor.id),
+                        ),
+                      )
+                    : undefined,
+                ),
+              )
+              .limit(input.limit + 1)
+              .orderBy(
+                desc(userReadingProgress.modifiedAt),
+                desc(bookmarks.id),
+              );
+
+      const pageBookmarkIds = pageRows.slice(0, input.limit).map((r) => r.id);
+      const nextRow =
+        pageRows.length > input.limit ? pageRows[input.limit] : null;
+      if (pageBookmarkIds.length === 0) {
+        return { bookmarks: [], nextCursor: null };
+      }
+
+      const loaded = await Bookmark.loadMulti(ctx, {
+        ids: pageBookmarkIds,
+        limit: pageBookmarkIds.length,
+        includeContent: input.includeContent,
+        sortOrder: input.sortOrder,
+      });
+      const bookmarksById = new Map(loaded.bookmarks.map((b) => [b.id, b]));
+      return {
+        bookmarks: pageBookmarkIds
+          .map((id) => bookmarksById.get(id))
+          .filter((b): b is Bookmark => !!b),
+        nextCursor:
+          nextRow && nextRow.cursorDate
+            ? {
+                id: nextRow.id,
+                createdAt: nextRow.cursorDate,
+              }
+            : null,
+      };
+    }
 
     // Choose query strategy based on filters
     // Strategy: Use the most selective filter as the driving table

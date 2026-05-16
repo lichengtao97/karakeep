@@ -208,6 +208,7 @@ export const zGetBookmarksRequestSchema = z.object({
   tagId: z.string().optional(),
   listId: z.string().optional(),
   rssFeedId: z.string().optional(),
+  readFilter: z.enum(["unread", "recentlyRead"]).optional(),
   limit: z.number().max(MAX_NUM_BOOKMARKS_PER_PAGE).optional(),
   cursor: zCursorV2.nullish(),
   // TODO: This was done for backward comptability. At this point, all clients should be settings this to true.

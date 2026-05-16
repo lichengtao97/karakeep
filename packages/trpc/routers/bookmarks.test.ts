@@ -289,6 +289,59 @@ describe("Bookmark Routes", () => {
       expect(bookmarks.bookmarks[0].id).toEqual(bookmark1.id);
     }
 
+    {
+      const unreadBookmark = await api.createBookmark({
+        url: "https://unread.example.com",
+        type: BookmarkTypes.LINK,
+      });
+      const firstReadBookmark = await api.createBookmark({
+        url: "https://first-read.example.com",
+        type: BookmarkTypes.LINK,
+      });
+      const latestReadBookmark = await api.createBookmark({
+        url: "https://latest-read.example.com",
+        type: BookmarkTypes.LINK,
+      });
+
+      await api.updateReadingProgress({
+        bookmarkId: firstReadBookmark.id,
+        readingProgressOffset: 100,
+      });
+      await new Promise((resolve) => setTimeout(resolve, 5));
+      await api.updateReadingProgress({
+        bookmarkId: latestReadBookmark.id,
+        readingProgressOffset: 200,
+      });
+      await new Promise((resolve) => setTimeout(resolve, 5));
+      await api.updateReadingProgress({
+        bookmarkId: firstReadBookmark.id,
+        readingProgressOffset: 300,
+      });
+
+      const unreadBookmarks = await api.getBookmarks({
+        archived: false,
+        readFilter: "unread",
+      });
+      expect(unreadBookmarks.bookmarks.map((b) => b.id)).toContain(
+        unreadBookmark.id,
+      );
+      expect(unreadBookmarks.bookmarks.map((b) => b.id)).not.toContain(
+        firstReadBookmark.id,
+      );
+      expect(unreadBookmarks.bookmarks.map((b) => b.id)).not.toContain(
+        latestReadBookmark.id,
+      );
+
+      const recentlyReadBookmarks = await api.getBookmarks({
+        archived: false,
+        readFilter: "recentlyRead",
+      });
+      expect(recentlyReadBookmarks.bookmarks.map((b) => b.id)).toEqual([
+        firstReadBookmark.id,
+        latestReadBookmark.id,
+      ]);
+    }
+
     // Test tagId filter
     {
       const tagId = await createTestTag(apiCallers[0], "testTag");

@@ -1,4 +1,4 @@
-import { Aperture } from "lucide-react";
+import Image from "next/image";
 
 export default function KarakeepLogo({ height }: { height: number }) {
   const iconSize = Math.max(24, Math.round(height * 0.55));
@@ -6,10 +6,13 @@ export default function KarakeepLogo({ height }: { height: number }) {
 
   return (
     <span className="flex items-center gap-2 font-semibold text-foreground">
-      <Aperture
+      <Image
+        src="/icons/logo-128.png"
+        alt=""
         aria-hidden="true"
         className="shrink-0"
-        strokeWidth={2.4}
+        width={128}
+        height={128}
         style={{ height: iconSize, width: iconSize }}
       />
       <span style={{ fontSize, lineHeight: `${height}px` }}>AI Lens</span>

@@ -534,6 +534,11 @@ export const userReadingProgress = sqliteTable(
     unique().on(tb.bookmarkId, tb.userId),
     index("userReadingProgress_bookmarkId_idx").on(tb.bookmarkId),
     index("userReadingProgress_userId_idx").on(tb.userId),
+    index("userReadingProgress_userId_modifiedAt_bookmarkId_idx").on(
+      tb.userId,
+      tb.modifiedAt,
+      tb.bookmarkId,
+    ),
   ],
 );
 

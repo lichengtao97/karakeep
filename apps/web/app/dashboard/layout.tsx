@@ -12,8 +12,10 @@ import { TRPCError } from "@trpc/server";
 import { TFunction } from "i18next";
 import {
   Archive,
+  BookOpen,
   ClipboardList,
   Highlighter,
+  History,
   Home,
   Search,
   Tag,
@@ -71,6 +73,16 @@ export default async function Dashboard({
             },
           ]
         : [],
+      {
+        name: t("common.unread"),
+        icon: <BookOpen size={18} />,
+        path: "/dashboard/unread",
+      },
+      {
+        name: t("common.recently_read"),
+        icon: <History size={18} />,
+        path: "/dashboard/recently-read",
+      },
       {
         name: t("common.tags"),
         icon: <Tag size={18} />,
