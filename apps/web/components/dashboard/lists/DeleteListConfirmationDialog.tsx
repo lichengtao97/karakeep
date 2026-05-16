@@ -39,7 +39,7 @@ export default function DeleteListConfirmationDialog({
     onError: () => {
       toast({
         variant: "destructive",
-        description: `Something went wrong`,
+        description: `出现了一些问题`,
       });
     },
   });

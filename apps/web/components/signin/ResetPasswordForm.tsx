@@ -36,7 +36,7 @@ const resetPasswordSchema = z
   })
   .extend(zResetPasswordSchema.pick({ newPassword: true }).shape)
   .refine((data) => data.newPassword === data.confirmPassword, {
-    message: "Passwords don't match",
+    message: "两次输入的密码不一致",
     path: ["confirmPassword"],
   });
 
@@ -70,7 +70,7 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
       if (error instanceof TRPCClientError) {
         setErrorMessage(error.message);
       } else {
-        setErrorMessage("An unexpected error occurred. Please try again.");
+        setErrorMessage("发生了意外错误，请重试。");
       }
     }
   };
@@ -79,12 +79,12 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
     <Card className="w-full">
       <CardHeader className="text-center">
         <CardTitle className="text-2xl font-bold">
-          {isSuccess ? "Password reset successful" : "Reset your password"}
+          {isSuccess ? "密码重置成功" : "重置密码"}
         </CardTitle>
         <CardDescription>
           {isSuccess
-            ? "Your password has been successfully reset. You can now sign in with your new password."
-            : "Enter your new password below."}
+            ? "你的密码已成功重置，现在可以使用新密码登录。"
+            : "请在下方输入新密码。"}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -95,8 +95,7 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
             </div>
             <Alert>
               <AlertDescription className="text-center">
-                Your password has been successfully reset. You can now sign in
-                with your new password.
+                你的密码已成功重置，现在可以使用新密码登录。
               </AlertDescription>
             </Alert>
             <ActionButton
@@ -104,7 +103,7 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
               onClick={() => router.push("/signin")}
               className="w-full"
             >
-              Go to Sign In
+              前往登录
             </ActionButton>
           </>
         ) : (
@@ -126,11 +125,11 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
                   name="newPassword"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>New Password</FormLabel>
+                      <FormLabel>新密码</FormLabel>
                       <FormControl>
                         <Input
                           type="password"
-                          placeholder="Enter your new password"
+                          placeholder="请输入新密码"
                           {...field}
                         />
                       </FormControl>
@@ -144,11 +143,11 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
                   name="confirmPassword"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Confirm New Password</FormLabel>
+                      <FormLabel>确认新密码</FormLabel>
                       <FormControl>
                         <Input
                           type="password"
-                          placeholder="Confirm your new password"
+                          placeholder="请再次输入新密码"
                           {...field}
                         />
                       </FormControl>
@@ -162,7 +161,7 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
                   loading={form.formState.isSubmitting}
                   className="w-full"
                 >
-                  Reset Password
+                  重置密码
                 </ActionButton>
               </form>
             </Form>
@@ -174,7 +173,7 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
                 onClick={() => router.push("/signin")}
                 className="w-full"
               >
-                Back to Sign In
+                返回登录
               </ActionButton>
             </div>
           </>

@@ -27,7 +27,7 @@ export default function ActionBar({ bookmark }: { bookmark: ZBookmark }) {
   const onError = () => {
     toast({
       variant: "destructive",
-      title: "Something went wrong",
+      title: "出现了一些问题",
       description: "There was a problem with your request.",
     });
   };

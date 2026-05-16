@@ -217,7 +217,7 @@
       "import_export_bookmarks": "Exportera bokmärken",
       "import_bookmarks_from_omnivore_export": "Importera bokmärken från Omnivore-export",
       "imported_bookmarks": "Importerade bokmärken",
-      "import_bookmarks_from_karakeep_export": "Importera bokmärken från Karakeep-export",
+      "import_bookmarks_from_karakeep_export": "Importera bokmärken från AI Lens-export",
       "import_bookmarks_from_html_file": "Importera bokmärken från HTML-fil",
       "import_bookmarks_from_pocket_export": "Importera bokmärken från Pocket-export",
       "import_bookmarks_from_matter_export": "Importera bokmärken från Matter-export",
@@ -996,7 +996,7 @@
   },
   "wrapped": {
     "title": "Din sammanfattning för {{year}}",
-    "subtitle": "Ett år i Karakeep",
+    "subtitle": "Ett år i AI Lens",
     "banner": {
       "title": "Din sammanfattning för 2025 är klar!",
       "description": "Se ditt år i bokmärken",
@@ -1037,7 +1037,7 @@
         "assets": "Tillgångar"
       }
     },
-    "footer": "Gjord med Karakeep",
+    "footer": "Gjord med AI Lens",
     "share": "Dela",
     "download": "Ladda ner",
     "close": "Stäng",

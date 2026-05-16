@@ -325,7 +325,7 @@
     "import": {
       "import_export_bookmarks": "ブックマークのインポート/エクスポート",
       "import_bookmarks_from_html_file": "HTML ファイルからブックマークをインポートする",
-      "import_bookmarks_from_karakeep_export": "Karakeep エクスポートからブックマークをインポート",
+      "import_bookmarks_from_karakeep_export": "AI Lens エクスポートからブックマークをインポート",
       "imported_bookmarks": "インポートされたブックマーク",
       "import_bookmarks_from_pocket_export": "Pocketのエクスポートからブックマークをインポート",
       "import_bookmarks_from_matter_export": "Matterのエクスポートからブックマークをインポート",
@@ -1037,7 +1037,7 @@
         "assets": "アセット"
       }
     },
-    "footer": "Karakeep製",
+    "footer": "AI Lens製",
     "share": "共有",
     "download": "ダウンロード",
     "close": "閉じる",

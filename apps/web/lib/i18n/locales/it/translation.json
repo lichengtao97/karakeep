@@ -217,7 +217,7 @@
       "import_export": "Importa / Esporta",
       "import_bookmarks_from_pocket_export": "Importa segnalibri da esportazione Pocket",
       "import_bookmarks_from_matter_export": "Importa segnalibri da esportazione Matter",
-      "import_bookmarks_from_karakeep_export": "Importa segnalibri da esportazione Karakeep",
+      "import_bookmarks_from_karakeep_export": "Importa segnalibri da esportazione AI Lens",
       "export_links_and_notes": "Esporta link e note",
       "imported_bookmarks": "Segnalibri importati",
       "import_bookmarks_from_html_file": "Importa segnalibri da file HTML",
@@ -996,7 +996,7 @@
   },
   "wrapped": {
     "title": "Il tuo riepilogo {{year}}",
-    "subtitle": "Un anno su Karakeep",
+    "subtitle": "Un anno su AI Lens",
     "banner": {
       "title": "Il tuo riepilogo 2025 è pronto!",
       "description": "Guarda il tuo anno in segnalibri",
@@ -1037,7 +1037,7 @@
         "assets": "Risorse"
       }
     },
-    "footer": "Realizzato con Karakeep",
+    "footer": "Realizzato con AI Lens",
     "share": "Condividi",
     "download": "Scarica",
     "close": "Chiudi",

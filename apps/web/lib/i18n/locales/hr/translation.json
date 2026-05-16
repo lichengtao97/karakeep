@@ -260,7 +260,7 @@
       "import_bookmarks_from_linkwarden_export": "Import oznaka iz Linkwarden exporta",
       "import_bookmarks_from_pocket_export": "Import oznaka iz Pocket exporta",
       "import_bookmarks_from_matter_export": "Import oznaka iz Matter exporta",
-      "import_bookmarks_from_karakeep_export": "Import oznaka iz Karakeep exporta",
+      "import_bookmarks_from_karakeep_export": "Import oznaka iz AI Lens exporta",
       "export_links_and_notes": "Export veza i bilješki",
       "imported_bookmarks": "Importirane oznake",
       "import_bookmarks_from_omnivore_export": "Import oznaka iz Omnivore exporta",
@@ -996,7 +996,7 @@
   },
   "wrapped": {
     "title": "Tvoj {{year}} sažetak",
-    "subtitle": "Godina u Karakeepu",
+    "subtitle": "Godina u AI Lensu",
     "banner": {
       "title": "Tvoj 2025 sažetak je spreman!",
       "description": "Pogledaj svoju godinu u oznakama",
@@ -1037,7 +1037,7 @@
         "assets": "Sredstva"
       }
     },
-    "footer": "Napravljeno s Karakeepom",
+    "footer": "Napravljeno s AI Lensom",
     "share": "Podijeli",
     "download": "Preuzmi",
     "close": "Zatvori",

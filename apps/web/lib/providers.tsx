@@ -1,7 +1,7 @@
 "use client";
 
 import type { UserLocalSettings } from "@/lib/userLocalSettings/types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Session, SessionProvider } from "@/lib/auth/client";
@@ -48,6 +48,34 @@ function getQueryClient() {
   }
 }
 
+function LocalServiceWorkerCleanup() {
+  useEffect(() => {
+    if (!["localhost", "127.0.0.1", "::1"].includes(window.location.hostname)) {
+      return;
+    }
+
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .getRegistrations()
+        .then((registrations) =>
+          Promise.all(
+            registrations.map((registration) => registration.unregister()),
+          ),
+        )
+        .catch(() => undefined);
+    }
+
+    if ("caches" in window) {
+      caches
+        .keys()
+        .then((keys) => Promise.all(keys.map((key) => caches.delete(key))))
+        .catch(() => undefined);
+    }
+  }, []);
+
+  return null;
+}
+
 export default function Providers({
   children,
   session,
@@ -86,6 +114,7 @@ export default function Providers({
           <QueryClientProvider client={queryClient}>
             <TRPCProvider trpcClient={trpcClient} queryClient={queryClient}>
               <CustomI18nextProvider lang={userLocalSettings.lang}>
+                <LocalServiceWorkerCleanup />
                 <ThemeProvider
                   attribute="class"
                   defaultTheme="system"

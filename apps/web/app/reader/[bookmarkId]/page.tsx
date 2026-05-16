@@ -60,7 +60,7 @@ export default function ReaderViewPage() {
             <Button variant="ghost" size="icon" onClick={onClose}>
               <X className="h-4 w-4" />
             </Button>
-            <span className="text-sm text-muted-foreground">Reader View</span>
+            <span className="text-sm text-muted-foreground">阅读视图</span>
           </div>
 
           <div className="flex items-center gap-2">
@@ -92,7 +92,7 @@ export default function ReaderViewPage() {
                 setShowHighlights(false);
               }
             }}
-            aria-label="Close highlights sidebar"
+            aria-label="关闭高亮侧栏"
           />
         )}
 
@@ -117,7 +117,7 @@ export default function ReaderViewPage() {
                   </h1>
                   <div className="flex items-center gap-4 text-sm text-muted-foreground">
                     {bookmark.content.type == BookmarkTypes.LINK && (
-                      <span>By {bookmark.content.author}</span>
+                      <span>作者：{bookmark.content.author}</span>
                     )}
                     <Separator orientation="vertical" className="h-4" />
                     <span>8 min</span>
@@ -152,10 +152,10 @@ export default function ReaderViewPage() {
             <div className="flex h-full flex-col">
               <div className="border-b p-4">
                 <div className="flex items-center justify-between">
-                  <h2 className="font-semibold">Highlights</h2>
+                  <h2 className="font-semibold">高亮</h2>
                   <div className="flex items-center gap-2">
                     <span className="text-sm text-muted-foreground">
-                      {highlights.highlights.length} saved
+                      已保存 {highlights.highlights.length} 条
                     </span>
                     <Button
                       variant="ghost"

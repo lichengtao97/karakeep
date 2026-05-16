@@ -39,25 +39,18 @@ export default function VerifyEmailPage() {
       onSuccess: () => {
         setStatus("success");
         if (isMobileAppRedirect(redirectUrl)) {
-          setMessage(
-            "Your email has been successfully verified! Redirecting to the app...",
-          );
+          setMessage("邮箱验证成功，正在跳转到应用...");
           // Redirect to mobile app after a brief delay
           setTimeout(() => {
             window.location.href = redirectUrl;
           }, 1500);
         } else {
-          setMessage(
-            "Your email has been successfully verified! You can now sign in.",
-          );
+          setMessage("邮箱验证成功，现在可以登录。");
         }
       },
       onError: (error) => {
         setStatus("error");
-        setMessage(
-          error.message ||
-            "Failed to verify email. The link may be invalid or expired.",
-        );
+        setMessage(error.message || "邮箱验证失败，链接可能无效或已过期。");
       },
     }),
   );
@@ -65,12 +58,10 @@ export default function VerifyEmailPage() {
   const resendEmailMutation = useMutation(
     api.users.resendVerificationEmail.mutationOptions({
       onSuccess: () => {
-        setMessage(
-          "A new verification email has been sent to your email address.",
-        );
+        setMessage("新的验证邮件已发送到你的邮箱。");
       },
       onError: (error) => {
-        setMessage(error.message || "Failed to resend verification email.");
+        setMessage(error.message || "重新发送验证邮件失败。");
       },
     }),
   );
@@ -82,7 +73,7 @@ export default function VerifyEmailPage() {
       verifyEmailMutation.mutate({ token, email });
     } else {
       setStatus("error");
-      setMessage("Invalid verification link. Missing token or email.");
+      setMessage("验证链接无效，缺少 token 或邮箱。");
     }
   }, [token, email]);
 
@@ -106,13 +97,11 @@ export default function VerifyEmailPage() {
     <div className="flex min-h-screen items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold">
-            Email Verification
-          </CardTitle>
+          <CardTitle className="text-2xl font-bold">邮箱验证</CardTitle>
           <CardDescription>
-            {status === "loading" && "Verifying your email address..."}
-            {status === "success" && "Email verified successfully!"}
-            {status === "error" && "Verification failed"}
+            {status === "loading" && "正在验证邮箱..."}
+            {status === "success" && "邮箱验证成功"}
+            {status === "error" && "验证失败"}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -133,7 +122,7 @@ export default function VerifyEmailPage() {
                 </AlertDescription>
               </Alert>
               <Button onClick={handleSignIn} className="w-full">
-                {isMobileRedirect ? "Open App" : "Sign In"}
+                {isMobileRedirect ? "打开应用" : "登录"}
               </Button>
             </>
           )}
@@ -159,10 +148,10 @@ export default function VerifyEmailPage() {
                     {resendEmailMutation.isPending ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Sending...
+                        正在发送...
                       </>
                     ) : (
-                      "Resend Verification Email"
+                      "重新发送验证邮件"
                     )}
                   </Button>
                   <Button
@@ -170,7 +159,7 @@ export default function VerifyEmailPage() {
                     variant="ghost"
                     className="w-full"
                   >
-                    Back to Sign In
+                    返回登录
                   </Button>
                 </div>
               )}

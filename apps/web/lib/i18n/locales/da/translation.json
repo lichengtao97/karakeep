@@ -58,7 +58,7 @@
     "import": {
       "export_links_and_notes": "Eksporter links og noter",
       "import_bookmarks_from_omnivore_export": "Importer bogmærker fra Omnivore-eksport",
-      "import_bookmarks_from_karakeep_export": "Importer bogmærker fra Karakeep-eksport",
+      "import_bookmarks_from_karakeep_export": "Importer bogmærker fra AI Lens-eksport",
       "import_export": "Import / eksport",
       "import_export_bookmarks": "Import / eksport bogmærker",
       "import_bookmarks_from_html_file": "Importer bogmærker fra HTML-fil",
@@ -996,7 +996,7 @@
   },
   "wrapped": {
     "title": "Din {{year}}-opsummering",
-    "subtitle": "Et år i Karakeep",
+    "subtitle": "Et år i AI Lens",
     "banner": {
       "title": "Din opsummering for 2025 er klar!",
       "description": "Se dit år i bogmærker",
@@ -1037,7 +1037,7 @@
         "assets": "Aktiver"
       }
     },
-    "footer": "Lavet med Karakeep",
+    "footer": "Lavet med AI Lens",
     "share": "Del",
     "download": "Hent",
     "close": "Luk",

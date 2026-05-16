@@ -33,41 +33,33 @@ interface WrappedContentProps {
   userName?: string;
 }
 
-const dayNames = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
+const dayNames = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
 const monthNames = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
+  "1月",
+  "2月",
+  "3月",
+  "4月",
+  "5月",
+  "6月",
+  "7月",
+  "8月",
+  "9月",
+  "10月",
+  "11月",
+  "12月",
 ];
 
 function formatSourceName(source: BookmarkSource | null): string {
-  if (!source) return "Unknown";
+  if (!source) return "未知来源";
   const sourceMap: Record<BookmarkSource, string> = {
     api: "API",
-    web: "Web",
-    extension: "Browser Extension",
+    web: "网页端",
+    extension: "浏览器扩展",
     cli: "CLI",
-    mobile: "Mobile App",
+    mobile: "移动端",
     singlefile: "SingleFile",
-    rss: "RSS Feed",
-    import: "Import",
+    rss: "RSS 订阅",
+    import: "导入",
   };
   return sourceMap[source];
 }
@@ -112,10 +104,10 @@ export const WrappedContent = forwardRef<HTMLDivElement, WrappedContentProps>(
           <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
             <div>
               <h1 className="text-2xl font-semibold md:text-3xl">
-                Your {stats.year} Wrapped
+                你的 {stats.year} 年度回顾
               </h1>
               <p className="mt-1 text-xs text-slate-300 md:text-sm">
-                A Year in Karakeep
+                AI Lens 年度回顾
               </p>
               {userName && (
                 <p className="mt-2 text-sm text-slate-400">{userName}</p>
@@ -125,13 +117,11 @@ export const WrappedContent = forwardRef<HTMLDivElement, WrappedContentProps>(
 
           <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
             <Card className="flex flex-col items-center justify-center border border-white/10 bg-white/5 p-4 text-center text-slate-100 backdrop-blur-sm">
-              <p className="text-xs text-slate-300">You saved</p>
+              <p className="text-xs text-slate-300">你已收集</p>
               <p className="my-2 text-3xl font-semibold md:text-4xl">
                 {stats.totalBookmarks}
               </p>
-              <p className="text-xs text-slate-300">
-                {stats.totalBookmarks === 1 ? "item" : "items"} this year
-              </p>
+              <p className="text-xs text-slate-300">条年度内容</p>
             </Card>
             {/* First Bookmark */}
             {stats.firstBookmark && (
@@ -140,14 +130,14 @@ export const WrappedContent = forwardRef<HTMLDivElement, WrappedContentProps>(
                   <div className="mb-3 flex items-center gap-2">
                     <Calendar className="h-4 w-4 flex-shrink-0 text-emerald-300" />
                     <p className="text-[10px] uppercase tracking-wide text-slate-400">
-                      First Bookmark of {stats.year}
+                      {stats.year} 年第一条收藏
                     </p>
                   </div>
                   <div className="flex-1">
                     <p className="text-2xl font-bold text-slate-100">
                       {new Date(
                         stats.firstBookmark.createdAt,
-                      ).toLocaleDateString("en-US", {
+                      ).toLocaleDateString("zh-CN", {
                         month: "long",
                         day: "numeric",
                       })}
@@ -166,15 +156,15 @@ export const WrappedContent = forwardRef<HTMLDivElement, WrappedContentProps>(
             <Card className="border border-white/10 bg-white/5 p-4 text-slate-100 backdrop-blur-sm">
               <h2 className="mb-2 flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-slate-300">
                 <Clock className="h-4 w-4" />
-                Activity Highlights
+                活跃亮点
               </h2>
               <div className="grid gap-2 text-sm">
                 {stats.mostActiveDay && (
                   <div>
-                    <p className="text-xs text-slate-400">Most Active Day</p>
+                    <p className="text-xs text-slate-400">最活跃日期</p>
                     <p className="text-base font-semibold">
                       {new Date(stats.mostActiveDay.date).toLocaleDateString(
-                        "en-US",
+                        "zh-CN",
                         {
                           month: "short",
                           day: "numeric",
@@ -182,26 +172,25 @@ export const WrappedContent = forwardRef<HTMLDivElement, WrappedContentProps>(
                       )}
                     </p>
                     <p className="text-xs text-slate-400">
-                      {stats.mostActiveDay.count}{" "}
-                      {stats.mostActiveDay.count === 1 ? "save" : "saves"}
+                      {stats.mostActiveDay.count} 条收藏
                     </p>
                   </div>
                 )}
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <p className="text-xs text-slate-400">Peak Hour</p>
+                    <p className="text-xs text-slate-400">高峰时段</p>
                     <p className="text-base font-semibold">
                       {stats.peakHour === 0
-                        ? "12 AM"
+                        ? "凌晨 12 点"
                         : stats.peakHour < 12
-                          ? `${stats.peakHour} AM`
+                          ? `${stats.peakHour} 点`
                           : stats.peakHour === 12
-                            ? "12 PM"
-                            : `${stats.peakHour - 12} PM`}
+                            ? "中午 12 点"
+                            : `${stats.peakHour} 点`}
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs text-slate-400">Peak Day</p>
+                    <p className="text-xs text-slate-400">高峰星期</p>
                     <p className="text-base font-semibold">
                       {dayNames[stats.peakDayOfWeek]}
                     </p>
@@ -214,14 +203,14 @@ export const WrappedContent = forwardRef<HTMLDivElement, WrappedContentProps>(
             {(stats.topDomains.length > 0 || stats.topTags.length > 0) && (
               <Card className="border border-white/10 bg-white/5 p-4 text-slate-100 backdrop-blur-sm md:col-span-2 lg:col-span-2">
                 <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-slate-300">
-                  Top Lists
+                  热门统计
                 </h2>
                 <div className="grid gap-3 md:grid-cols-2">
                   {stats.topDomains.length > 0 && (
                     <div>
                       <h3 className="mb-1 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-400">
                         <Globe className="h-3.5 w-3.5" />
-                        Sites
+                        站点
                       </h3>
                       <div className="space-y-1.5 text-sm">
                         {stats.topDomains.map((domain, index) => (
@@ -249,7 +238,7 @@ export const WrappedContent = forwardRef<HTMLDivElement, WrappedContentProps>(
                     <div>
                       <h3 className="mb-1 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-400">
                         <Hash className="h-3.5 w-3.5" />
-                        Tags
+                        标签
                       </h3>
                       <div className="space-y-1.5 text-sm">
                         {stats.topTags.map((tag, index) => (
@@ -279,7 +268,7 @@ export const WrappedContent = forwardRef<HTMLDivElement, WrappedContentProps>(
             {stats.bookmarksBySource.length > 0 && (
               <Card className="border border-white/10 bg-white/5 p-4 text-slate-100 backdrop-blur-sm">
                 <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-300">
-                  How You Save
+                  收藏来源
                 </h2>
                 <div className="space-y-1.5 text-sm">
                   {stats.bookmarksBySource.map((source) => (
@@ -304,7 +293,7 @@ export const WrappedContent = forwardRef<HTMLDivElement, WrappedContentProps>(
             <Card className="border border-white/10 bg-white/5 p-4 text-slate-100 backdrop-blur-sm md:col-span-2 lg:col-span-3">
               <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-slate-300">
                 <Calendar className="h-4 w-4" />
-                Your Year in Saves
+                年度收藏趋势
               </h2>
               <div className="grid gap-2 text-xs md:grid-cols-2 lg:grid-cols-3">
                 {stats.monthlyActivity.map((month) => (
@@ -336,19 +325,19 @@ export const WrappedContent = forwardRef<HTMLDivElement, WrappedContentProps>(
                   <p className="text-lg font-semibold">
                     {stats.totalFavorites}
                   </p>
-                  <p className="text-[10px] text-slate-400">Favorites</p>
+                  <p className="text-[10px] text-slate-400">收藏</p>
                 </div>
                 <div className="rounded-lg bg-white/5 p-3">
                   <Hash className="mx-auto mb-1 h-4 w-4 text-amber-200" />
                   <p className="text-lg font-semibold">{stats.totalTags}</p>
-                  <p className="text-[10px] text-slate-400">Tags Created</p>
+                  <p className="text-[10px] text-slate-400">已创建标签</p>
                 </div>
                 <div className="rounded-lg bg-white/5 p-3">
                   <Highlighter className="mx-auto mb-1 h-4 w-4 text-emerald-200" />
                   <p className="text-lg font-semibold">
                     {stats.totalHighlights}
                   </p>
-                  <p className="text-[10px] text-slate-400">Highlights</p>
+                  <p className="text-[10px] text-slate-400">高亮</p>
                 </div>
               </div>
               <div className="mt-3 grid gap-3 text-center sm:grid-cols-3">
@@ -357,21 +346,21 @@ export const WrappedContent = forwardRef<HTMLDivElement, WrappedContentProps>(
                   <p className="text-lg font-semibold">
                     {stats.bookmarksByType.link}
                   </p>
-                  <p className="text-[10px] text-slate-400">Links</p>
+                  <p className="text-[10px] text-slate-400">链接</p>
                 </div>
                 <div className="rounded-lg bg-white/5 p-3">
                   <FileText className="mx-auto mb-1 h-4 w-4 text-slate-200" />
                   <p className="text-lg font-semibold">
                     {stats.bookmarksByType.text}
                   </p>
-                  <p className="text-[10px] text-slate-400">Notes</p>
+                  <p className="text-[10px] text-slate-400">笔记</p>
                 </div>
                 <div className="rounded-lg bg-white/5 p-3">
                   <BookOpen className="mx-auto mb-1 h-4 w-4 text-slate-200" />
                   <p className="text-lg font-semibold">
                     {stats.bookmarksByType.asset}
                   </p>
-                  <p className="text-[10px] text-slate-400">Assets</p>
+                  <p className="text-[10px] text-slate-400">文件</p>
                 </div>
               </div>
             </Card>
@@ -379,7 +368,7 @@ export const WrappedContent = forwardRef<HTMLDivElement, WrappedContentProps>(
 
           {/* Footer */}
           <div className="pb-4 pt-1 text-center text-[10px] text-slate-500">
-            Made with Karakeep
+            使用 AI Lens 制作
           </div>
         </div>
       </div>

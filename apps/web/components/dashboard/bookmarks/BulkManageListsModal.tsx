@@ -61,7 +61,7 @@ export default function BulkManageListsModal({
         } else {
           toast({
             variant: "destructive",
-            title: "Something went wrong",
+            title: "出现了一些问题",
           });
         }
       },

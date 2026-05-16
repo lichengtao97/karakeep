@@ -76,7 +76,7 @@ function useDropTarget(listId: string, listName: string) {
       } catch {
         toast({
           description: t("common.something_went_wrong", {
-            defaultValue: "Something went wrong",
+            defaultValue: "出现了一些问题",
           }),
           variant: "destructive",
         });

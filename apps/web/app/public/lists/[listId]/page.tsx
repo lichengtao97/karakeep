@@ -15,12 +15,12 @@ export async function generateMetadata(props: {
       listId: params.listId,
     });
     return {
-      title: `${resp.name} by ${resp.ownerName} - Karakeep`,
+      title: `${resp.name} - ${resp.ownerName} 的 AI Lens 列表`,
       description:
         resp.description && resp.description.length > 0
-          ? `${resp.description} by ${resp.ownerName} on Karakeep`
+          ? `${resp.description}，由 ${resp.ownerName} 通过 AI Lens 分享`
           : undefined,
-      applicationName: "Karakeep",
+      applicationName: "AI Lens",
       authors: [
         {
           name: resp.ownerName,
@@ -33,7 +33,7 @@ export async function generateMetadata(props: {
     }
   }
   return {
-    title: "Karakeep",
+    title: "AI Lens",
   };
 }
 

@@ -33,14 +33,12 @@ import { useTRPC } from "@karakeep/shared-react/trpc";
 
 const inviteAcceptSchema = z
   .object({
-    name: z.string().min(1, "Name is required"),
-    password: z.string().min(8, "Password must be at least 8 characters"),
-    confirmPassword: z
-      .string()
-      .min(8, "Password must be at least 8 characters"),
+    name: z.string().min(1, "请输入姓名"),
+    password: z.string().min(8, "密码至少需要 8 个字符"),
+    confirmPassword: z.string().min(8, "密码至少需要 8 个字符"),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
+    message: "两次输入的密码不一致",
     path: ["confirmPassword"],
   });
 
@@ -82,12 +80,8 @@ export default function InviteAcceptForm({ token }: InviteAcceptFormProps) {
     return (
       <Card className="w-full">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold">
-            Loading Invitation
-          </CardTitle>
-          <CardDescription>
-            Please wait while we verify your invitation...
-          </CardDescription>
+          <CardTitle className="text-2xl font-bold">正在加载邀请</CardTitle>
+          <CardDescription>正在验证你的邀请，请稍候...</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center justify-center">
@@ -102,12 +96,8 @@ export default function InviteAcceptForm({ token }: InviteAcceptFormProps) {
     return (
       <Card className="w-full">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold">
-            Invalid Invitation
-          </CardTitle>
-          <CardDescription>
-            This invitation link is not valid or has been removed.
-          </CardDescription>
+          <CardTitle className="text-2xl font-bold">邀请无效</CardTitle>
+          <CardDescription>这个邀请链接无效，或已被移除。</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center justify-center">
@@ -122,7 +112,7 @@ export default function InviteAcceptForm({ token }: InviteAcceptFormProps) {
           )}
 
           <Button onClick={handleBackToSignIn} className="w-full">
-            Back to Sign In
+            返回登录
           </Button>
         </CardContent>
       </Card>
@@ -133,12 +123,8 @@ export default function InviteAcceptForm({ token }: InviteAcceptFormProps) {
     return (
       <Card className="w-full">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold">
-            Invitation Expired
-          </CardTitle>
-          <CardDescription>
-            This invitation link has expired and is no longer valid.
-          </CardDescription>
+          <CardTitle className="text-2xl font-bold">邀请已过期</CardTitle>
+          <CardDescription>这个邀请链接已过期，无法继续使用。</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center justify-center">
@@ -147,7 +133,7 @@ export default function InviteAcceptForm({ token }: InviteAcceptFormProps) {
 
           <div className="space-y-2 text-center">
             <p className="text-sm text-muted-foreground">
-              Please contact an administrator to request a new invitation.
+              请联系管理员重新发送邀请。
             </p>
           </div>
 
@@ -156,7 +142,7 @@ export default function InviteAcceptForm({ token }: InviteAcceptFormProps) {
             variant="outline"
             className="w-full"
           >
-            Back to Sign In
+            返回登录
           </Button>
         </CardContent>
       </Card>
@@ -166,12 +152,8 @@ export default function InviteAcceptForm({ token }: InviteAcceptFormProps) {
   return (
     <Card className="w-full">
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl font-bold">
-          Accept Your Invitation
-        </CardTitle>
-        <CardDescription>
-          Complete your account setup to join Karakeep
-        </CardDescription>
+        <CardTitle className="text-2xl font-bold">接受邀请</CardTitle>
+        <CardDescription>完成账号设置，加入 AI Lens</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="flex items-center justify-center">
@@ -181,7 +163,7 @@ export default function InviteAcceptForm({ token }: InviteAcceptFormProps) {
         <div className="space-y-2 text-center">
           <div className="flex items-center justify-center space-x-2">
             <Mail className="h-4 w-4 text-muted-foreground" />
-            <p className="text-sm text-muted-foreground">Invited email:</p>
+            <p className="text-sm text-muted-foreground">受邀邮箱：</p>
           </div>
           <p className="font-medium text-foreground">{inviteData.email}</p>
         </div>
@@ -205,8 +187,7 @@ export default function InviteAcceptForm({ token }: InviteAcceptFormProps) {
 
                 if (!resp || !resp.ok || resp.error) {
                   setErrorMessage(
-                    resp?.error ??
-                      "Account created but sign in failed. Please try signing in manually.",
+                    resp?.error ?? "账号已创建，但自动登录失败。请手动登录。",
                   );
                   return;
                 }
@@ -216,7 +197,7 @@ export default function InviteAcceptForm({ token }: InviteAcceptFormProps) {
                 if (e instanceof TRPCClientError) {
                   setErrorMessage(e.message);
                 } else {
-                  setErrorMessage("An unexpected error occurred");
+                  setErrorMessage("发生了意外错误");
                 }
               }
             })}
@@ -234,13 +215,9 @@ export default function InviteAcceptForm({ token }: InviteAcceptFormProps) {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Full Name</FormLabel>
+                  <FormLabel>姓名</FormLabel>
                   <FormControl>
-                    <Input
-                      type="text"
-                      placeholder="Enter your full name"
-                      {...field}
-                    />
+                    <Input type="text" placeholder="请输入姓名" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -252,11 +229,11 @@ export default function InviteAcceptForm({ token }: InviteAcceptFormProps) {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>密码</FormLabel>
                   <FormControl>
                     <Input
                       type="password"
-                      placeholder="Create a password"
+                      placeholder="请创建密码"
                       {...field}
                     />
                   </FormControl>
@@ -270,11 +247,11 @@ export default function InviteAcceptForm({ token }: InviteAcceptFormProps) {
               name="confirmPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Confirm Password</FormLabel>
+                  <FormLabel>确认密码</FormLabel>
                   <FormControl>
                     <Input
                       type="password"
-                      placeholder="Confirm your password"
+                      placeholder="请再次输入密码"
                       {...field}
                     />
                   </FormControl>
@@ -293,10 +270,10 @@ export default function InviteAcceptForm({ token }: InviteAcceptFormProps) {
               {form.formState.isSubmitting || acceptInviteMutation.isPending ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Creating Account...
+                  正在创建账号...
                 </>
               ) : (
-                "Create Account & Sign In"
+                "创建账号并登录"
               )}
             </ActionButton>
 
@@ -306,7 +283,7 @@ export default function InviteAcceptForm({ token }: InviteAcceptFormProps) {
               onClick={handleBackToSignIn}
               className="w-full"
             >
-              Back to Sign In
+              返回登录
             </Button>
           </form>
         </Form>

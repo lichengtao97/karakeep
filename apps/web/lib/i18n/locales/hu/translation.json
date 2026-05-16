@@ -191,7 +191,7 @@
       "regenerate_confirmation": "Ez visszavonja a jelenlegi kulcsot, és generál egy újat. A jelenlegi kulcsot használó alkalmazások nem fognak működni."
     },
     "import": {
-      "import_bookmarks_from_karakeep_export": "Könyvjelző importálása Karakeep-ből",
+      "import_bookmarks_from_karakeep_export": "Könyvjelző importálása AI Lens-ből",
       "import_bookmarks_from_omnivore_export": "Könyvjelző importálása Omnivore-ból",
       "import_export": "Importálás / Exportálás",
       "import_export_bookmarks": "Könyvjelző importálása / exportálása",
@@ -996,7 +996,7 @@
   },
   "wrapped": {
     "title": "A te {{year}} összegzésed",
-    "subtitle": "Egy év Karakeepben",
+    "subtitle": "Egy év AI Lensben",
     "banner": {
       "title": "A 2025-ös összegzésed kész!",
       "description": "Nézd meg az éved a könyvjelzőkben",
@@ -1037,7 +1037,7 @@
         "assets": "Eszközök"
       }
     },
-    "footer": "Készült a Karakeep-pel",
+    "footer": "Készült a AI Lens-pel",
     "share": "Megosztás",
     "download": "Letöltés",
     "close": "Bezárás",

@@ -146,7 +146,7 @@ export default function BookmarksGrid({
             onClick={() => fetchNextPage()}
             variant="ghost"
           >
-            Load More
+            加载更多
           </ActionButton>
         </div>
       )}

@@ -376,7 +376,7 @@
       "import_bookmarks_from_pocket_export": "Importer bokmerker fra Pocket-eksport",
       "import_bookmarks_from_matter_export": "Importer bokmerker fra Matter-eksport",
       "import_bookmarks_from_linkwarden_export": "Importer bokmerker fra Linkwarden-eksport",
-      "import_bookmarks_from_karakeep_export": "Importer bokmerker fra Karakeepp-eksport",
+      "import_bookmarks_from_karakeep_export": "Importer bokmerker fra AI Lensp-eksport",
       "export_links_and_notes": "Eksporter lenker og notater",
       "imported_bookmarks": "Importerte bokmerker",
       "import_bookmarks_from_tab_session_manager_export": "Importer bokmerker fra Tab Session Manager",
@@ -996,7 +996,7 @@
   },
   "wrapped": {
     "title": "Din samlede oppsummering for {{year}}",
-    "subtitle": "Et år i Karakeep",
+    "subtitle": "Et år i AI Lens",
     "banner": {
       "title": "Oppsummeringen din for 2025 er klar!",
       "description": "Se året ditt i bokmerker",
@@ -1037,7 +1037,7 @@
         "assets": "Ressurser"
       }
     },
-    "footer": "Laget med Karakeep",
+    "footer": "Laget med AI Lens",
     "share": "Del",
     "download": "Last ned",
     "close": "Lukk",

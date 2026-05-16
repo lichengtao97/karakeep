@@ -200,7 +200,7 @@
       }
     },
     "import": {
-      "import_bookmarks_from_karakeep_export": "Импортировать закладки из экспорта Karakeep",
+      "import_bookmarks_from_karakeep_export": "Импортировать закладки из экспорта AI Lens",
       "import_export": "Импорт / Экспорт",
       "import_export_bookmarks": "Импорт / Экспорт закладок",
       "import_bookmarks_from_pocket_export": "Импортировать закладки из экспорта Pocket",
@@ -996,7 +996,7 @@
   },
   "wrapped": {
     "title": "Ваш {{year}} Wrapped",
-    "subtitle": "Год в Karakeep",
+    "subtitle": "Год в AI Lens",
     "banner": {
       "title": "Ваш 2025 Wrapped готов!",
       "description": "Посмотрите свой год в закладках",
@@ -1037,7 +1037,7 @@
         "assets": "Ресурсы"
       }
     },
-    "footer": "Сделано с помощью Karakeep",
+    "footer": "Сделано с помощью AI Lens",
     "share": "Поделиться",
     "download": "Скачать",
     "close": "Закрыть",

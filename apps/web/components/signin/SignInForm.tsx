@@ -33,8 +33,8 @@ export default async function SignInForm() {
       )}
       <Card className="w-full">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold">Welcome Back</CardTitle>
-          <CardDescription>Sign in to your Karakeep account</CardDescription>
+          <CardTitle className="text-2xl font-bold">欢迎回来</CardTitle>
+          <CardDescription>登录你的 AI Lens 账号</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           {serverConfig.demoMode && (
@@ -42,7 +42,7 @@ export default async function SignInForm() {
               <Info className="h-4 w-4" />
               <AlertDescription>
                 <div className="space-y-1">
-                  <p className="font-semibold">Demo Mode</p>
+                  <p className="font-semibold">演示模式</p>
                   <p>Email: {serverConfig.demoMode.email}</p>
                   <p>Password: {serverConfig.demoMode.password}</p>
                 </div>
@@ -56,7 +56,7 @@ export default async function SignInForm() {
             <>
               <div className="flex w-full items-center">
                 <div className="flex-1 grow border-t border-gray-200"></div>
-                <span className="bg-white px-3 text-sm text-gray-500">Or</span>
+                <span className="bg-white px-3 text-sm text-gray-500">或</span>
                 <div className="flex-1 grow border-t border-gray-200"></div>
               </div>
               <div className="space-y-2">

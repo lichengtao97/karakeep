@@ -245,7 +245,7 @@
       "import_bookmarks_from_hoarder_export": "Tuo kirjanmerkit Hoarder-viennistä",
       "export_links_and_notes": "Vie linkit ja muistiinpanot",
       "imported_bookmarks": "Tuodut kirjanmerkit",
-      "import_bookmarks_from_karakeep_export": "Tuo kirjanmerkit Karakeep-viennistä",
+      "import_bookmarks_from_karakeep_export": "Tuo kirjanmerkit AI Lens-viennistä",
       "import_bookmarks_from_tab_session_manager_export": "Tuo kirjanmerkit Tab Session Managerista",
       "import_bookmarks_from_mymind_export": "Tuodaan kirjanmerkit mymind-viennistä",
       "import_bookmarks_from_instapaper_export": "Importoi kirjanmerkit Instapaper-viennistä"
@@ -997,7 +997,7 @@
   },
   "wrapped": {
     "title": "Sinun {{year}}-koosteesi",
-    "subtitle": "Vuosi Karakeepissä",
+    "subtitle": "Vuosi AI Lensissä",
     "banner": {
       "title": "Sinun 2025 -koosteesi on valmis!",
       "description": "Katso vuotesi kirjanmerkeissä",
@@ -1038,7 +1038,7 @@
         "assets": "Resurssit"
       }
     },
-    "footer": "Tehty Karakeepillä",
+    "footer": "Tehty AI Lensillä",
     "share": "Jaa",
     "download": "Lataa",
     "close": "Sulje",

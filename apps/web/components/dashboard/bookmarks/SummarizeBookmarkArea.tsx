@@ -28,7 +28,7 @@ function AISummary({
     useSummarizeBookmark({
       onError: () => {
         toast({
-          description: "Something went wrong",
+          description: "出现了一些问题",
           variant: "destructive",
         });
       },
@@ -37,7 +37,7 @@ function AISummary({
     useUpdateBookmark({
       onError: () => {
         toast({
-          description: "Something went wrong",
+          description: "出现了一些问题",
           variant: "destructive",
         });
       },
@@ -111,7 +111,7 @@ export default function SummarizeBookmarkArea({
   const { mutate, isPending } = useSummarizeBookmark({
     onError: () => {
       toast({
-        description: "Something went wrong",
+        description: "出现了一些问题",
         variant: "destructive",
       });
     },

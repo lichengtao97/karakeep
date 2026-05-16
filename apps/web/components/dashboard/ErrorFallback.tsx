@@ -16,24 +16,23 @@ export default function ErrorFallback() {
 
         <div className="space-y-4">
           <h1 className="text-balance text-2xl font-semibold text-foreground">
-            Oops! Something went wrong
+            出现了一些问题
           </h1>
           <p className="text-pretty leading-relaxed text-muted-foreground">
-            We&apos;re sorry, but an unexpected error occurred. Please try again
-            or contact support if the issue persists.
+            抱歉，页面遇到了意外错误。请重试；如果问题持续存在，请联系管理员。
           </p>
         </div>
 
         <div className="space-y-3">
           <Button className="w-full" onClick={() => window.location.reload()}>
             <RefreshCw className="mr-2 h-4 w-4" />
-            Try Again
+            重试
           </Button>
 
           <Link href="/" className="block">
             <Button variant="outline" className="w-full">
               <Home className="mr-2 h-4 w-4" />
-              Go Home
+              返回首页
             </Button>
           </Link>
         </div>

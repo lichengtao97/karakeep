@@ -179,7 +179,7 @@ export default function AssetsSettingsPage() {
               loading={isFetchingNextPage}
               ignoreDemoMode={true}
             >
-              Load More
+              加载更多
             </ActionButton>
           </div>
         )}

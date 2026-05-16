@@ -40,7 +40,7 @@ const ArchiveBookmarkButton = React.forwardRef<
         if (e.data?.code == "BAD_REQUEST") {
           toast.error(e.message);
         } else {
-          toast.error("Something went wrong");
+          toast.error("出现了一些问题");
         }
       },
     });

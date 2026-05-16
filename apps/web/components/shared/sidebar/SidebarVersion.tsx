@@ -63,7 +63,7 @@ export default function SidebarVersion({
   const stableRelease = isStableRelease(effectiveChangelogVersion);
   const displayVersion = serverVersion ?? "unknown";
   const changelogDisplayVersion = effectiveChangelogVersion ?? displayVersion;
-  const versionLabel = `Karakeep v${displayVersion}`;
+  const versionLabel = `AI Lens v${displayVersion}`;
   const releasePageUrl = useMemo(() => {
     if (
       !effectiveChangelogVersion ||

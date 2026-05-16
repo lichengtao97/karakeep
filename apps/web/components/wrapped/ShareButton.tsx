@@ -12,7 +12,7 @@ interface ShareButtonProps {
 
 export function ShareButton({
   contentRef,
-  fileName = "karakeep-wrapped-2025.png",
+  fileName = "ai-lens-wrapped-2025.png",
 }: ShareButtonProps) {
   const [isGenerating, setIsGenerating] = useState(false);
 
@@ -45,8 +45,8 @@ export function ShareButton({
         if (navigator.canShare({ files: [file] })) {
           await navigator.share({
             files: [file],
-            title: "My 2025 Karakeep Wrapped",
-            text: "Check out my 2025 Karakeep Wrapped!",
+            title: "我的 2025 AI Lens 年度回顾",
+            text: "看看我的 2025 AI Lens 年度回顾",
           });
           return;
         }
@@ -77,8 +77,8 @@ export function ShareButton({
       size="icon"
       variant="ghost"
       className="h-10 w-10 rounded-full bg-white/10 text-slate-100 hover:bg-white/20"
-      aria-label={isNativeShareAvailable ? "Share" : "Download"}
-      title={isNativeShareAvailable ? "Share" : "Download"}
+      aria-label={isNativeShareAvailable ? "分享" : "下载"}
+      title={isNativeShareAvailable ? "分享" : "下载"}
     >
       {isGenerating ? (
         <Loader2 className="h-4 w-4 animate-spin" />

@@ -435,7 +435,7 @@
       "import_bookmarks_from_pocket_export": "Pocket 내보내기에서 북마크 가져오기",
       "import_bookmarks_from_matter_export": "Matter 내보내기에서 북마크 가져오기",
       "import_bookmarks_from_omnivore_export": "Omnivore 내보내기에서 북마크 가져오기",
-      "import_bookmarks_from_karakeep_export": "Karakeep 내보내기에서 북마크 가져오기",
+      "import_bookmarks_from_karakeep_export": "AI Lens 내보내기에서 북마크 가져오기",
       "export_links_and_notes": "링크와 주석 내보내기",
       "imported_bookmarks": "가져온 북마크",
       "import_bookmarks_from_tab_session_manager_export": "탭 세션 관리자에서 북마크 가져오기",
@@ -1037,7 +1037,7 @@
         "assets": "자산"
       }
     },
-    "footer": "Karakeep으로 만들었습니다",
+    "footer": "AI Lens으로 만들었습니다",
     "share": "공유",
     "download": "다운로드",
     "close": "닫기",

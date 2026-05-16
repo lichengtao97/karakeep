@@ -20,7 +20,7 @@ export default function SignInProviderButton({
       }
       className="w-full"
     >
-      Sign in with {provider.name}
+      使用 {provider.name} 登录
     </Button>
   );
 }

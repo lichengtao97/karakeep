@@ -223,7 +223,7 @@
       "import_bookmarks_from_pocket_export": "Pocket Dışa Aktarımından Yer İşaretlerini İçe Aktar",
       "import_bookmarks_from_matter_export": "Matter Dışa Aktarımından Yer İşaretlerini İçe Aktar",
       "import_bookmarks_from_omnivore_export": "Omnivore Dışa Aktarımından Yer İşaretlerini İçe Aktar",
-      "import_bookmarks_from_karakeep_export": "Karakeep Dışa Aktarımından Yer İşaretlerini İçe Aktar",
+      "import_bookmarks_from_karakeep_export": "AI Lens Dışa Aktarımından Yer İşaretlerini İçe Aktar",
       "export_links_and_notes": "Bağlantı ve Notları Dışa Aktar",
       "imported_bookmarks": "İçe Aktarılan Yer İşaretleri",
       "import_bookmarks_from_linkwarden_export": "Linkwarden dışa aktarımından Yer İşaretlerini İçe Aktar",
@@ -996,7 +996,7 @@
   },
   "wrapped": {
     "title": "{{year}} Özetin",
-    "subtitle": "Karakeep'te Bir Yıl",
+    "subtitle": "AI Lens'te Bir Yıl",
     "banner": {
       "title": "2025 Özetin hazır!",
       "description": "Yılını yer işaretlerinde gör",
@@ -1037,7 +1037,7 @@
         "assets": "Varlıklar"
       }
     },
-    "footer": "Karakeep ile yapıldı",
+    "footer": "AI Lens ile yapıldı",
     "share": "Paylaş",
     "download": "İndir",
     "close": "Kapat",

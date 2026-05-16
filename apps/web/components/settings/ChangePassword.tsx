@@ -54,7 +54,7 @@ export function ChangePassword() {
           });
         } else {
           toast({
-            description: "Something went wrong",
+            description: "出现了一些问题",
             variant: "destructive",
           });
         }

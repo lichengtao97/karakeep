@@ -24,14 +24,14 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Karakeep",
-  applicationName: "Karakeep",
+  title: "AI Lens",
+  applicationName: "AI Lens",
   description:
-    "The Bookmark Everything app. Hoard links, notes, and images and they will get automatically tagged AI.",
+    "AI Lens 是面向中文用户的 AI 资讯平台，集资讯收集、AI 打标、标注、录入与分享于一体。",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
-    title: "Karakeep",
+    title: "AI Lens",
   },
   formatDetection: {
     telephone: false,

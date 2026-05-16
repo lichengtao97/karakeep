@@ -220,7 +220,7 @@
       "import_bookmarks_from_pocket_export": "從 Pocket 匯出檔案匯入書籤",
       "import_bookmarks_from_matter_export": "從 Matter 匯出檔案匯入書籤",
       "import_bookmarks_from_omnivore_export": "從 Omnivore 匯出檔案匯入書籤",
-      "import_bookmarks_from_karakeep_export": "從 Karakeep 匯出檔案匯入書籤",
+      "import_bookmarks_from_karakeep_export": "從 AI Lens 匯出檔案匯入書籤",
       "export_links_and_notes": "匯出連結和筆記",
       "imported_bookmarks": "已匯入的書籤",
       "import_bookmarks_from_linkwarden_export": "從 Linkwarden 匯出檔案匯入書籤",
@@ -996,7 +996,7 @@
   },
   "wrapped": {
     "title": "您的 {{year}} 年度回顧",
-    "subtitle": "Karakeep 年度大事記",
+    "subtitle": "AI Lens 年度大事記",
     "banner": {
       "title": "您的 2025 年度回顧已準備就緒！",
       "description": "看看你這年的書籤",
@@ -1037,7 +1037,7 @@
         "assets": "資產"
       }
     },
-    "footer": "使用 Karakeep 製作",
+    "footer": "使用 AI Lens 製作",
     "share": "分享",
     "download": "下載",
     "close": "關閉",

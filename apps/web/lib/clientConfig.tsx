@@ -14,7 +14,7 @@ export const ClientConfigCtx = createContext<ClientConfig>({
   turnstile: null,
   inference: {
     isConfigured: false,
-    inferredTagLang: "english",
+    inferredTagLang: "chinese",
     enableAutoTagging: false,
     enableAutoSummarization: false,
   },

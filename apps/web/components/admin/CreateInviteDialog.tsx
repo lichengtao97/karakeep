@@ -66,7 +66,7 @@ export default function CreateInviteDialog({
         if (e instanceof TRPCClientError) {
           setErrorMessage(e.message);
         } else {
-          setErrorMessage("Failed to send invite");
+          setErrorMessage("发送邀请失败");
         }
       },
     }),
@@ -77,11 +77,10 @@ export default function CreateInviteDialog({
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Send User Invitation</DialogTitle>
+          <DialogTitle>发送用户邀请</DialogTitle>
           <DialogDescription>
-            Send an invitation to a new user to join Karakeep. They&apos;ll
-            receive an email with instructions to create their account and will
-            be assigned the &quot;user&quot; role.
+            邀请新用户加入 AI Lens。对方会收到账号创建说明，并默认分配为
+            &quot;user&quot; 角色。
           </DialogDescription>
         </DialogHeader>
 
@@ -102,7 +101,7 @@ export default function CreateInviteDialog({
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email Address</FormLabel>
+                  <FormLabel>邮箱地址</FormLabel>
                   <FormControl>
                     <Input
                       type="email"
@@ -122,13 +121,13 @@ export default function CreateInviteDialog({
                 loading={false}
                 onClick={() => setOpen(false)}
               >
-                Cancel
+                取消
               </ActionButton>
               <ActionButton
                 type="submit"
                 loading={createInviteMutation.isPending}
               >
-                Send Invitation
+                发送邀请
               </ActionButton>
             </div>
           </form>

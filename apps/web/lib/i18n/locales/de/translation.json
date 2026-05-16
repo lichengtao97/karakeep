@@ -220,7 +220,7 @@
       "import_bookmarks_from_pocket_export": "Lesezeichen aus Pocket-Export importieren",
       "import_bookmarks_from_matter_export": "Lesezeichen aus Matter-Export importieren",
       "import_bookmarks_from_omnivore_export": "Lesezeichen aus Omnivore-Export importieren",
-      "import_bookmarks_from_karakeep_export": "Lesezeichen aus Karakeep-Export importieren",
+      "import_bookmarks_from_karakeep_export": "Lesezeichen aus AI Lens-Export importieren",
       "export_links_and_notes": "Links und Notizen exportieren",
       "imported_bookmarks": "Importierte Lesezeichen",
       "import_bookmarks_from_linkwarden_export": "Lesezeichen aus Linkwarden-Export importieren",
@@ -996,7 +996,7 @@
   },
   "wrapped": {
     "title": "Dein {{year}} Jahresrückblick",
-    "subtitle": "Ein Jahr in Karakeep",
+    "subtitle": "Ein Jahr in AI Lens",
     "banner": {
       "title": "Dein Jahresrückblick 2025 ist fertig!",
       "description": "Dein Jahr in Lesezeichen ansehen",
@@ -1037,7 +1037,7 @@
         "assets": "Assets"
       }
     },
-    "footer": "Gemacht mit Karakeep",
+    "footer": "Gemacht mit AI Lens",
     "share": "Teilen",
     "download": "Herunterladen",
     "close": "Schließen",

@@ -220,7 +220,7 @@
       "import_bookmarks_from_pocket_export": "Importer des favoris depuis une exportation Pocket",
       "import_bookmarks_from_matter_export": "Importer des favoris depuis une exportation Matter",
       "import_bookmarks_from_omnivore_export": "Importer des favoris depuis une exportation Omnivore",
-      "import_bookmarks_from_karakeep_export": "Importer des favoris depuis une exportation Karakeep",
+      "import_bookmarks_from_karakeep_export": "Importer des favoris depuis une exportation AI Lens",
       "export_links_and_notes": "Exporter les liens et les notes",
       "imported_bookmarks": "Favoris importés",
       "import_bookmarks_from_linkwarden_export": "Importer des marque-pages depuis l'export Linkwarden",
@@ -996,7 +996,7 @@
   },
   "wrapped": {
     "title": "Votre récap de {{year}}",
-    "subtitle": "Une année dans Karakeep",
+    "subtitle": "Une année dans AI Lens",
     "banner": {
       "title": "Votre récap 2025 est prêt !",
       "description": "Consultez votre année en signets",
@@ -1037,7 +1037,7 @@
         "assets": "Ressources"
       }
     },
-    "footer": "Fait avec Karakeep",
+    "footer": "Fait avec AI Lens",
     "share": "Partager",
     "download": "Télécharger",
     "close": "Fermer",

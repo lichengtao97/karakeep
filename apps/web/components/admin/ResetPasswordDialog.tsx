@@ -55,7 +55,7 @@ export default function ResetPasswordDialog({
     api.admin.resetPassword.mutationOptions({
       onSuccess: () => {
         toast({
-          description: "Password reset successfully",
+          description: "密码重置成功",
         });
         onOpenChange(false);
       },

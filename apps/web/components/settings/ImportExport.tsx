@@ -58,14 +58,14 @@ function ExportButton() {
       const res = await fetch(`/api/bookmarks/export?format=${format}`);
       if (!res.ok) {
         const error = await res.json();
-        throw new Error(error?.error || "Failed to export bookmarks");
+        throw new Error(error?.error || "导出失败");
       }
       const match = res.headers
         .get("Content-Disposition")
         ?.match(/filename\*?=(?:UTF-8''|")?([^"]+)/i);
       const filename = match
         ? match[1]
-        : `karakeep-export-${new Date().toISOString()}.${format}`;
+        : `ai-lens-export-${new Date().toISOString()}.${format}`;
       return { blob: res.blob(), filename };
     },
     enabled: false,
@@ -100,18 +100,18 @@ function ExportButton() {
           <Upload className="h-5 w-5 text-primary" />
         </div>
         <div className="flex-1">
-          <h3 className="font-medium">Export File</h3>
+          <h3 className="font-medium">导出文件</h3>
           <p>{t("settings.import.export_links_and_notes")}</p>
           <Select
             value={format}
             onValueChange={(value) => setFormat(value as "json" | "netscape")}
           >
             <SelectTrigger className="mt-2 w-[180px]">
-              <SelectValue placeholder="Format" />
+              <SelectValue placeholder="格式" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="json">JSON (Karakeep format)</SelectItem>
-              <SelectItem value="netscape">HTML (Netscape format)</SelectItem>
+              <SelectItem value="json">JSON（AI Lens 格式）</SelectItem>
+              <SelectItem value="netscape">HTML（Netscape 格式）</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -124,7 +124,7 @@ function ExportButton() {
           disabled={isFetching}
         >
           {isFetching && <Loader2 className="mr-2 animate-spin" />}
-          <p>Export</p>
+          <p>导出</p>
         </Button>
       </CardContent>
     </Card>
@@ -141,13 +141,13 @@ export function ImportExportRow() {
       {quotaError && (
         <Alert variant="destructive" className="relative">
           <AlertCircle className="h-4 w-4" />
-          <AlertTitle>Import Quota Exceeded</AlertTitle>
+          <AlertTitle>导入额度已超出</AlertTitle>
           <AlertDescription>{quotaError}</AlertDescription>
         </Alert>
       )}
       <div className="grid gap-4 md:grid-cols-2">
         <ImportCard
-          text="HTML File"
+          text="HTML 文件"
           description={t("settings.import.import_bookmarks_from_html_file")}
         >
           <FilePickerButton
@@ -160,7 +160,7 @@ export function ImportExportRow() {
               runUploadBookmarkFile({ file, source: "html" })
             }
           >
-            <p>Import</p>
+            <p>导入</p>
           </FilePickerButton>
         </ImportCard>
         <ImportCard
@@ -177,7 +177,7 @@ export function ImportExportRow() {
               runUploadBookmarkFile({ file, source: "pocket" })
             }
           >
-            <p>Import</p>
+            <p>导入</p>
           </FilePickerButton>
         </ImportCard>
         <ImportCard
@@ -194,7 +194,7 @@ export function ImportExportRow() {
               runUploadBookmarkFile({ file, source: "matter" })
             }
           >
-            <p>Import</p>
+            <p>导入</p>
           </FilePickerButton>
         </ImportCard>
         <ImportCard
@@ -213,7 +213,7 @@ export function ImportExportRow() {
               runUploadBookmarkFile({ file, source: "omnivore" })
             }
           >
-            <p>Import</p>
+            <p>导入</p>
           </FilePickerButton>
         </ImportCard>
         <ImportCard
@@ -232,7 +232,7 @@ export function ImportExportRow() {
               runUploadBookmarkFile({ file, source: "linkwarden" })
             }
           >
-            <p>Import</p>
+            <p>导入</p>
           </FilePickerButton>
         </ImportCard>
         <ImportCard
@@ -251,7 +251,7 @@ export function ImportExportRow() {
               runUploadBookmarkFile({ file, source: "tab-session-manager" })
             }
           >
-            <p>Import</p>
+            <p>导入</p>
           </FilePickerButton>
         </ImportCard>
         <ImportCard
@@ -268,7 +268,7 @@ export function ImportExportRow() {
               runUploadBookmarkFile({ file, source: "mymind" })
             }
           >
-            <p>Import</p>
+            <p>导入</p>
           </FilePickerButton>
         </ImportCard>
         <ImportCard
@@ -287,11 +287,11 @@ export function ImportExportRow() {
               runUploadBookmarkFile({ file, source: "instapaper" })
             }
           >
-            <p>Import</p>
+            <p>导入</p>
           </FilePickerButton>
         </ImportCard>
         <ImportCard
-          text="Karakeep"
+          text="AI Lens"
           description={t(
             "settings.import.import_bookmarks_from_karakeep_export",
           )}
@@ -306,7 +306,7 @@ export function ImportExportRow() {
               runUploadBookmarkFile({ file, source: "karakeep" })
             }
           >
-            <p>Import</p>
+            <p>导入</p>
           </FilePickerButton>
         </ImportCard>
         <ImportCard
@@ -325,7 +325,7 @@ export function ImportExportRow() {
               runUploadBookmarkFile({ file, source: "readwise-reader" })
             }
           >
-            <p>Import</p>
+            <p>导入</p>
           </FilePickerButton>
         </ImportCard>
         <ImportCard
@@ -342,7 +342,7 @@ export function ImportExportRow() {
               runUploadBookmarkFile({ file, source: "onetab" })
             }
           >
-            <p>Import</p>
+            <p>导入</p>
           </FilePickerButton>
         </ImportCard>
         <ExportButton />
@@ -350,7 +350,7 @@ export function ImportExportRow() {
       {importProgress && (
         <div className="flex flex-col gap-2">
           <p className="shrink-0 text-sm">
-            Processed {importProgress.done} of {importProgress.total} bookmarks
+            已处理 {importProgress.done} / {importProgress.total} 个书签
           </p>
           <div className="w-full">
             <Progress

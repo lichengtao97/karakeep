@@ -233,7 +233,7 @@
       "import_bookmarks_from_matter_export": "Importar Favoritos de exportação do Matter",
       "import_bookmarks_from_omnivore_export": "Importar Favoritos de exportação do Omnivore",
       "import_bookmarks_from_linkwarden_export": "Importar Favoritos de exportação do Linkwarden",
-      "import_bookmarks_from_karakeep_export": "Importar Favoritos de exportação do Karakeep",
+      "import_bookmarks_from_karakeep_export": "Importar Favoritos de exportação do AI Lens",
       "export_links_and_notes": "Exportar Links e Notas",
       "imported_bookmarks": "Favoritos Importados",
       "import_bookmarks_from_tab_session_manager_export": "Importar favoritos do Tab Session Manager",
@@ -996,7 +996,7 @@
   },
   "wrapped": {
     "title": "Seu Resumo de {{year}}",
-    "subtitle": "Um Ano em Karakeep",
+    "subtitle": "Um Ano em AI Lens",
     "banner": {
       "title": "Seu Resumo de 2025 está pronto!",
       "description": "Veja seu ano em favoritos",
@@ -1037,7 +1037,7 @@
         "assets": "Ativos"
       }
     },
-    "footer": "Feito com Karakeep",
+    "footer": "Feito com AI Lens",
     "share": "Compartilhar",
     "download": "Baixar",
     "close": "Fechar",

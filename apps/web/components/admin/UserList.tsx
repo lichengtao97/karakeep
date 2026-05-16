@@ -57,7 +57,7 @@ export default function UsersSection() {
       onError: (e) => {
         toast({
           variant: "destructive",
-          description: `Something went wrong: ${e.message}`,
+          description: `出现了一些问题: ${e.message}`,
         });
       },
     }),

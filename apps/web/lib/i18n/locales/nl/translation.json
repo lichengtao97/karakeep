@@ -148,7 +148,7 @@
       "import_bookmarks_from_matter_export": "Importeer Bladwijzers van Matter export",
       "import_bookmarks_from_omnivore_export": "Bladwijzers importeren uit Omnivore export",
       "import_bookmarks_from_linkwarden_export": "Bladwijzers importeren uit Linkwarden-export",
-      "import_bookmarks_from_karakeep_export": "Bladwijzers importeren uit Karakeep-export",
+      "import_bookmarks_from_karakeep_export": "Bladwijzers importeren uit AI Lens-export",
       "export_links_and_notes": "Links en notities exporteren",
       "import_bookmarks_from_tab_session_manager_export": "Bladwijzers importeren uit Tab Session Manager",
       "import_bookmarks_from_mymind_export": "Bladwijzers importeren uit mijnmind-export",
@@ -996,7 +996,7 @@
   },
   "wrapped": {
     "title": "Jouw {{year}} Overzicht",
-    "subtitle": "Een jaar in Karakeep",
+    "subtitle": "Een jaar in AI Lens",
     "banner": {
       "title": "Jouw 2025 Overzicht is klaar!",
       "description": "Bekijk je jaar in bladwijzers",
@@ -1037,7 +1037,7 @@
         "assets": "Activa"
       }
     },
-    "footer": "Gemaakt met Karakeep",
+    "footer": "Gemaakt met AI Lens",
     "share": "Delen",
     "download": "Downloaden",
     "close": "Sluiten",

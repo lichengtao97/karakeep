@@ -194,7 +194,7 @@
       "import_bookmarks_from_pocket_export": "Importovať záložky z Pocket exportu",
       "import_bookmarks_from_matter_export": "Importovať záložky z Matter exportu",
       "import_bookmarks_from_linkwarden_export": "Importovať záložky z Linkwarden exportu",
-      "import_bookmarks_from_karakeep_export": "Importovať záložky z Karakeep exportu",
+      "import_bookmarks_from_karakeep_export": "Importovať záložky z AI Lens exportu",
       "export_links_and_notes": "Exportovať odkazy a poznámky",
       "imported_bookmarks": "Importovať záložky",
       "import_export": "Importovať / exportovať",
@@ -996,7 +996,7 @@
   },
   "wrapped": {
     "title": "Tvoj {{year}} Wrapped",
-    "subtitle": "Rok v Karakeep",
+    "subtitle": "Rok v AI Lens",
     "banner": {
       "title": "Tvoj 2025 Wrapped je pripravený!",
       "description": "Pozri si svoj rok v záložkách",
@@ -1037,7 +1037,7 @@
         "assets": "Aktíva"
       }
     },
-    "footer": "Vyrobené pomocou Karakeep",
+    "footer": "Vyrobené pomocou AI Lens",
     "share": "Zdieľať",
     "download": "Stiahnuť",
     "close": "Zavrieť",

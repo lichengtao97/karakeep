@@ -36,7 +36,7 @@ export default function NotFound() {
           <Link href="/" className="block">
             <Button variant="outline" className="w-full">
               <Home className="mr-2 h-4 w-4" />
-              Go Home
+              返回首页
             </Button>
           </Link>
         </div>

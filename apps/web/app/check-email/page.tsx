@@ -30,12 +30,10 @@ export default function CheckEmailPage() {
   const resendEmailMutation = useMutation(
     api.users.resendVerificationEmail.mutationOptions({
       onSuccess: () => {
-        setMessage(
-          "A new verification email has been sent to your email address.",
-        );
+        setMessage("新的验证邮件已发送到你的邮箱。");
       },
       onError: (error) => {
-        setMessage(error.message || "Failed to resend verification email.");
+        setMessage(error.message || "重新发送验证邮件失败。");
       },
     }),
   );
@@ -55,16 +53,12 @@ export default function CheckEmailPage() {
       <div className="flex min-h-screen items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8">
         <Card className="w-full max-w-md">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-bold">
-              Invalid Request
-            </CardTitle>
-            <CardDescription>
-              No email address provided. Please try signing up again.
-            </CardDescription>
+            <CardTitle className="text-2xl font-bold">请求无效</CardTitle>
+            <CardDescription>没有提供邮箱地址，请重新注册。</CardDescription>
           </CardHeader>
           <CardContent>
             <Button onClick={handleBackToSignIn} className="w-full">
-              Back to Sign In
+              返回登录
             </Button>
           </CardContent>
         </Card>
@@ -76,10 +70,8 @@ export default function CheckEmailPage() {
     <div className="flex min-h-screen items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold">Check Your Email</CardTitle>
-          <CardDescription>
-            We&apos;ve sent a verification link to your email address
-          </CardDescription>
+          <CardTitle className="text-2xl font-bold">请查收邮箱</CardTitle>
+          <CardDescription>我们已向你的邮箱发送验证链接</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center justify-center">
@@ -87,13 +79,10 @@ export default function CheckEmailPage() {
           </div>
 
           <div className="space-y-2 text-center">
-            <p className="text-sm text-muted-foreground">
-              We&apos;ve sent a verification email to:
-            </p>
+            <p className="text-sm text-muted-foreground">验证邮件已发送至：</p>
             <p className="font-medium text-foreground">{email}</p>
             <p className="text-sm text-muted-foreground">
-              Click the link in the email to verify your account and complete
-              your registration.
+              请点击邮件中的链接完成账号验证和注册。
             </p>
           </div>
 
@@ -115,10 +104,10 @@ export default function CheckEmailPage() {
               {resendEmailMutation.isPending ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Sending...
+                  正在发送...
                 </>
               ) : (
-                "Resend Verification Email"
+                "重新发送验证邮件"
               )}
             </Button>
             <Button
@@ -126,7 +115,7 @@ export default function CheckEmailPage() {
               variant="ghost"
               className="w-full"
             >
-              Back to Sign In
+              返回登录
             </Button>
           </div>
         </CardContent>

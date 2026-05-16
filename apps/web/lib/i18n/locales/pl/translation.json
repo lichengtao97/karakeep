@@ -174,7 +174,7 @@
       "import_export": "Import / Eksport",
       "import_export_bookmarks": "Import / Eksport zakładek",
       "import_bookmarks_from_omnivore_export": "Importuj zakładki z eksportu Omnivore",
-      "import_bookmarks_from_karakeep_export": "Importuj zakładki z eksportu Karakeep",
+      "import_bookmarks_from_karakeep_export": "Importuj zakładki z eksportu AI Lens",
       "export_links_and_notes": "Eksportuj linki i notatki",
       "imported_bookmarks": "Zaimportowane zakładki",
       "import_bookmarks_from_linkwarden_export": "Importuj zakładki z eksportu Linkwarden",
@@ -996,7 +996,7 @@
   },
   "wrapped": {
     "title": "Podsumowanie {{year}}",
-    "subtitle": "Rok w Karakeep",
+    "subtitle": "Rok w AI Lens",
     "banner": {
       "title": "Twoje podsumowanie 2025 jest gotowe!",
       "description": "Zobacz swój rok w zakładkach",
@@ -1037,7 +1037,7 @@
         "assets": "Zasoby"
       }
     },
-    "footer": "Stworzone z Karakeep",
+    "footer": "Stworzone z AI Lens",
     "share": "Udostępnij",
     "download": "Pobierz",
     "close": "Zamknij",

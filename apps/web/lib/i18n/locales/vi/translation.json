@@ -77,7 +77,7 @@
       "import_bookmarks_from_pocket_export": "Nhập dấu trang từ bản xuất Pocket",
       "import_bookmarks_from_matter_export": "Nhập dấu trang từ bản xuất Matter",
       "import_bookmarks_from_omnivore_export": "Nhập dấu trang từ xuất Omnivore",
-      "import_bookmarks_from_karakeep_export": "Nhập dấu trang từ bản xuất Karakeep",
+      "import_bookmarks_from_karakeep_export": "Nhập dấu trang từ bản xuất AI Lens",
       "import_bookmarks_from_tab_session_manager_export": "Nhập dấu trang từ Tab Session Manager",
       "import_bookmarks_from_mymind_export": "Nhập dấu trang từ tệp xuất mymind",
       "import_bookmarks_from_instapaper_export": "Nhập dấu trang từ bản xuất Instapaper"
@@ -1027,13 +1027,13 @@
         "assets": "Tài sản"
       }
     },
-    "footer": "Được tạo bằng Karakeep",
+    "footer": "Được tạo bằng AI Lens",
     "share": "Chia sẻ",
     "download": "Tải xuống",
     "close": "Đóng",
     "generating": "Đang tạo...",
     "title": "Tổng Kết {{year}} Của Bạn",
-    "subtitle": "Một Năm Ở Karakeep",
+    "subtitle": "Một Năm Ở AI Lens",
     "banner": {
       "title": "Tổng Kết Năm 2025 Của Bạn đã sẵn sàng!",
       "description": "Xem năm của bạn qua các bookmark",

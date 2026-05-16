@@ -93,7 +93,7 @@ export async function GET(request: NextRequest) {
       status: 200,
       headers: {
         "Content-type": "application/json",
-        "Content-disposition": `attachment; filename="karakeep-export-${new Date().toISOString()}.json"`,
+        "Content-disposition": `attachment; filename="ai-lens-export-${new Date().toISOString()}.json"`,
       },
     });
   } else if (format === "netscape") {

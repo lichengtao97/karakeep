@@ -13,7 +13,7 @@
       "regenerate_confirmation": "S tem boš preklical trenutni ključ in ustvaril novega. Vse aplikacije, ki uporabljajo trenutni ključ, bodo prenehale delovati."
     },
     "import": {
-      "import_bookmarks_from_karakeep_export": "Uvozi zaznamke iz Karakeep izvoza",
+      "import_bookmarks_from_karakeep_export": "Uvozi zaznamke iz AI Lens izvoza",
       "import_bookmarks_from_linkwarden_export": "Uvozi zaznamke iz Linkwarden izvoza",
       "imported_bookmarks": "Uvoženi zaznamki",
       "import_bookmarks_from_pocket_export": "Uvozi zaznamke iz Pocket izvoza",
@@ -996,7 +996,7 @@
   },
   "wrapped": {
     "title": "Tvoj zavitek {{year}}",
-    "subtitle": "Leto v Karakeepu",
+    "subtitle": "Leto v AI Lensu",
     "banner": {
       "title": "Tvoj zavitek 2025 je pripravljen!",
       "description": "Oglej si svoje leto v zaznamkih",
@@ -1037,7 +1037,7 @@
         "assets": "Sredstva"
       }
     },
-    "footer": "Izdelano s programom Karakeep",
+    "footer": "Izdelano s programom AI Lens",
     "share": "Deli",
     "download": "Prenesi",
     "close": "Zapri",

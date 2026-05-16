@@ -30,7 +30,7 @@ import { z } from "zod";
 import { useTRPC } from "@karakeep/shared-react/trpc";
 
 const forgotPasswordSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
+  email: z.string().email("请输入有效邮箱地址"),
 });
 
 export default function ForgotPasswordForm() {
@@ -56,7 +56,7 @@ export default function ForgotPasswordForm() {
       if (error instanceof TRPCClientError) {
         setErrorMessage(error.message);
       } else {
-        setErrorMessage("An unexpected error occurred. Please try again.");
+        setErrorMessage("发生了意外错误，请重试。");
       }
     }
   };
@@ -65,12 +65,12 @@ export default function ForgotPasswordForm() {
     <Card className="w-full">
       <CardHeader className="text-center">
         <CardTitle className="text-2xl font-bold">
-          {isSubmitted ? "Check your email" : "Forgot your password?"}
+          {isSubmitted ? "请查收邮箱" : "忘记密码？"}
         </CardTitle>
         <CardDescription>
           {isSubmitted
-            ? "If an account with that email exists, we've sent you a password reset link."
-            : "Enter your email address and we'll send you a link to reset your password."}
+            ? "如果该邮箱对应账号存在，我们已经发送了密码重置链接。"
+            : "请输入邮箱地址，我们会发送密码重置链接。"}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -81,8 +81,7 @@ export default function ForgotPasswordForm() {
             </div>
             <Alert>
               <AlertDescription className="text-center">
-                If an account with that email exists, we&apos;ve sent you a
-                password reset link.
+                如果该邮箱对应账号存在，我们已经发送了密码重置链接。
               </AlertDescription>
             </Alert>
             <ActionButton
@@ -91,7 +90,7 @@ export default function ForgotPasswordForm() {
               onClick={() => router.push("/signin")}
               className="w-full"
             >
-              Back to Sign In
+              返回登录
             </ActionButton>
           </>
         ) : (
@@ -113,11 +112,11 @@ export default function ForgotPasswordForm() {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email</FormLabel>
+                      <FormLabel>邮箱</FormLabel>
                       <FormControl>
                         <Input
                           type="email"
-                          placeholder="Enter your email address"
+                          placeholder="请输入邮箱地址"
                           {...field}
                         />
                       </FormControl>
@@ -131,7 +130,7 @@ export default function ForgotPasswordForm() {
                   loading={form.formState.isSubmitting}
                   className="w-full"
                 >
-                  Send Reset Link
+                  发送重置链接
                 </ActionButton>
               </form>
             </Form>
@@ -143,7 +142,7 @@ export default function ForgotPasswordForm() {
                 onClick={() => router.push("/signin")}
                 className="w-full"
               >
-                Back to Sign In
+                返回登录
               </ActionButton>
             </div>
           </>

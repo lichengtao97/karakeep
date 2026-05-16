@@ -308,7 +308,7 @@
       "import_bookmarks_from_matter_export": "Import Bookmarks from Matter export",
       "import_bookmarks_from_omnivore_export": "Import Bookmarks from Omnivore export",
       "import_bookmarks_from_linkwarden_export": "Import Bookmarks from Linkwarden export",
-      "import_bookmarks_from_karakeep_export": "Import Bookmarks from Karakeep export",
+      "import_bookmarks_from_karakeep_export": "Import Bookmarks from AI Lens export",
       "import_bookmarks_from_tab_session_manager_export": "Import Bookmarks from Tab Session Manager",
       "import_bookmarks_from_mymind_export": "Import Bookmarks from mymind export",
       "import_bookmarks_from_instapaper_export": "Import Bookmarks from Instapaper export",
@@ -1083,7 +1083,7 @@
   },
   "wrapped": {
     "title": "Your {{year}} Wrapped",
-    "subtitle": "A Year in Karakeep",
+    "subtitle": "A Year in AI Lens",
     "banner": {
       "title": "Your 2025 Wrapped is ready!",
       "description": "See your year in bookmarks",
@@ -1124,7 +1124,7 @@
         "assets": "Assets"
       }
     },
-    "footer": "Made with Karakeep",
+    "footer": "Made with AI Lens",
     "share": "Share",
     "download": "Download",
     "close": "Close",

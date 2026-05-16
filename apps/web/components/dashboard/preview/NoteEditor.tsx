@@ -22,7 +22,7 @@ export function NoteEditor({
     },
     onError: () => {
       toast({
-        description: "Something went wrong while saving the note",
+        description: "保存笔记时出现问题",
         variant: "destructive",
       });
     },

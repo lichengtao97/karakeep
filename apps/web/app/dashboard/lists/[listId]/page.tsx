@@ -14,7 +14,7 @@ export async function generateMetadata(props: {
   try {
     const list = await api.lists.get({ listId: params.listId });
     return {
-      title: `${list.name} | Karakeep`,
+      title: `${list.name} | AI Lens`,
     };
   } catch (e) {
     if (e instanceof TRPCError && e.code === "NOT_FOUND") {

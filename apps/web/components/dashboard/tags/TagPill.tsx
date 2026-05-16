@@ -52,7 +52,7 @@ export const TagPill = React.memo(function TagPill({
       } else {
         toast({
           variant: "destructive",
-          title: "Something went wrong",
+          title: "出现了一些问题",
         });
       }
     },

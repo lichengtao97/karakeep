@@ -295,7 +295,7 @@
       "import_bookmarks_from_linkwarden_export": "درون‌ریزی نشانک‌ها از خروجی Linkwarden",
       "import_bookmarks_from_tab_session_manager_export": "درون‌ریزی نشانک‌ها از Tab Session Manager",
       "export_links_and_notes": "برون‌بری لینک‌ها و یادداشت‌ها",
-      "import_bookmarks_from_karakeep_export": "درون‌ریزی نشانک‌ها از خروجی Karakeep",
+      "import_bookmarks_from_karakeep_export": "درون‌ریزی نشانک‌ها از خروجی AI Lens",
       "imported_bookmarks": "نشانک‌های درون‌ریزی‌شده",
       "import_bookmarks_from_mymind_export": "درون‌ریزی نشانک‌ها از خروجی mymind",
       "import_bookmarks_from_instapaper_export": "درون‌ریزی نشانک‌ها از خروجی Instapaper"
@@ -1013,7 +1013,7 @@
         "assets": "دارایی‌ها"
       }
     },
-    "footer": "ساخته شده با Karakeep",
+    "footer": "ساخته شده با AI Lens",
     "share": "اشتراک‌گذاری",
     "download": "بارگیری",
     "close": "بستن",

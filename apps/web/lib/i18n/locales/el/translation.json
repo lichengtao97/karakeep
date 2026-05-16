@@ -242,7 +242,7 @@
       "import_bookmarks_from_matter_export": "Εισαγωγή Σελιδοδεικτών από εξαγωγή Matter",
       "import_bookmarks_from_omnivore_export": "Εισαγωγή Σελιδοδεικτών από εξαγωγή Omnivore",
       "import_bookmarks_from_linkwarden_export": "Εισαγωγή Σελιδοδεικτών από εξαγωγή Linkwarden",
-      "import_bookmarks_from_karakeep_export": "Εισαγωγή Σελιδοδεικτών από εξαγωγή Karakeep",
+      "import_bookmarks_from_karakeep_export": "Εισαγωγή Σελιδοδεικτών από εξαγωγή AI Lens",
       "import_bookmarks_from_tab_session_manager_export": "Εισαγωγή Σελιδοδεικτών από Tab Session Manager",
       "export_links_and_notes": "Εξαγωγή Συνδέσμων και Σημειώσεων",
       "imported_bookmarks": "Εισαγόμενοι Σελιδοδείκτες",
@@ -996,7 +996,7 @@
   },
   "wrapped": {
     "title": "Το {{year}} σας σε περιτύλιγμα",
-    "subtitle": "Μια χρονιά στο Karakeep",
+    "subtitle": "Μια χρονιά στο AI Lens",
     "banner": {
       "title": "Το δικό σας 2025 Wrapped είναι έτοιμο!",
       "description": "Δείτε τη χρονιά σας σε σελιδοδείκτες",
@@ -1037,7 +1037,7 @@
         "assets": "Περιουσιακά στοιχεία"
       }
     },
-    "footer": "Δημιουργήθηκε με το Karakeep",
+    "footer": "Δημιουργήθηκε με το AI Lens",
     "share": "Κοινή χρήση",
     "download": "Λήψη",
     "close": "Κλείσιμο",
