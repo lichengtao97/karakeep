@@ -188,7 +188,7 @@ export default function BookmarkPreview({
     <div className="flex flex-col gap-5">
       <div className="flex flex-col gap-1">
         <p className="line-clamp-2 text-ellipsis break-words text-lg font-medium">
-          {!title ? "Untitled" : title}
+          {!title ? t("common.untitled", { defaultValue: "未命名" }) : title}
         </p>
         {sourceUrl && (
           <Link

@@ -176,6 +176,7 @@ function DragHandle({
   bookmark: ZBookmark;
   className?: string;
 }) {
+  const { t } = useTranslation();
   const { isBulkEditEnabled } = useBulkActionsStore();
   const handleDragStart = useCallback(
     (e: React.DragEvent) => {
@@ -185,7 +186,9 @@ function DragHandle({
 
       // Create a small pill element as the drag preview
       const pill = document.createElement("div");
-      const title = getBookmarkTitle(bookmark) ?? "Untitled";
+      const title =
+        getBookmarkTitle(bookmark) ??
+        t("common.untitled", { defaultValue: "未命名" });
       pill.textContent =
         title.length > 40 ? title.substring(0, 40) + "\u2026" : title;
       Object.assign(pill.style, {
@@ -209,7 +212,7 @@ function DragHandle({
       e.dataTransfer.setDragImage(pill, 0, 0);
       requestAnimationFrame(() => pill.remove());
     },
-    [bookmark],
+    [bookmark, t],
   );
 
   if (isBulkEditEnabled) return null;
@@ -402,6 +405,7 @@ function GridView({
 }
 
 function CompactView({ bookmark, title, footer, className }: Props) {
+  const { t } = useTranslation();
   const { showTitle } = useBookmarkDisplaySettings();
   return (
     <div
@@ -434,7 +438,7 @@ function CompactView({ bookmark, title, footer, className }: Props) {
           )}
           {showTitle && (
             <div className="shrink-1 text-md line-clamp-1 overflow-hidden text-ellipsis break-words">
-              {title ?? "Untitled"}
+              {title ?? t("common.untitled", { defaultValue: "未命名" })}
             </div>
           )}
           {footer && (

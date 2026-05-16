@@ -17,7 +17,7 @@ export function NoteEditor({
   const updateBookmarkMutator = useUpdateBookmark({
     onSuccess: () => {
       toast({
-        description: "The bookmark has been updated!",
+        description: "内容已更新。",
       });
     },
     onError: () => {

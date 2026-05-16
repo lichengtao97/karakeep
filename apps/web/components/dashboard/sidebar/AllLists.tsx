@@ -217,7 +217,7 @@ export default function AllLists({
     <ul className="sidebar-scrollbar max-h-full gap-y-2 overflow-auto text-sm">
       <li className="flex justify-between pb-3">
         <p className="text-xs uppercase tracking-wider text-muted-foreground">
-          Lists
+          {t("lists.sidebar_title", { defaultValue: "列表" })}
         </p>
         <EditListModal>
           <Link href="#">

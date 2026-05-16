@@ -39,7 +39,7 @@ export default function BulkTagAction() {
     toast({
       variant: "destructive",
       title: t("common.something_went_wrong"),
-      description: "There was a problem with your request.",
+      description: "处理请求时出现问题。",
     });
   };
 

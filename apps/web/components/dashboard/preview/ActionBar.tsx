@@ -28,13 +28,13 @@ export default function ActionBar({ bookmark }: { bookmark: ZBookmark }) {
     toast({
       variant: "destructive",
       title: "出现了一些问题",
-      description: "There was a problem with your request.",
+      description: "处理请求时出现问题。",
     });
   };
   const { mutate: favBookmark, isPending: pendingFav } = useUpdateBookmark({
     onSuccess: () => {
       toast({
-        description: "The bookmark has been updated!",
+        description: "内容已更新。",
       });
     },
     onError,
@@ -43,7 +43,7 @@ export default function ActionBar({ bookmark }: { bookmark: ZBookmark }) {
     useUpdateBookmark({
       onSuccess: (resp) => {
         toast({
-          description: `The bookmark has been ${resp.archived ? "Archived" : "Un-archived"}!`,
+          description: resp.archived ? "内容已归档。" : "内容已取消归档。",
         });
       },
       onError,

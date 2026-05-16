@@ -23,7 +23,7 @@ export function useUploadAsset() {
           variant: "default",
         });
       } else {
-        toast({ description: "Bookmark uploaded" });
+        toast({ description: "内容已上传" });
       }
     },
     onError: () => {
@@ -64,7 +64,7 @@ export function useUploadAsset() {
           });
         } catch {
           toast({
-            description: `${file.name}: Failed to read markdown file`,
+            description: `${file.name}: Markdown 文件读取失败`,
             variant: "destructive",
           });
         }
@@ -157,13 +157,13 @@ export default function UploadDropzone({
             {numUploading > 0 ? (
               <div className="flex items-center justify-center gap-2">
                 <p className="text-2xl font-bold text-gray-700">
-                  Uploading {numUploaded} / {numUploading}
+                  正在上传 {numUploaded} / {numUploading}
                 </p>
                 <LoadingSpinner />
               </div>
             ) : (
               <p className="text-2xl font-bold text-gray-700">
-                Drop Your Image / PDF / Markdown file
+                拖放图片、PDF 或 Markdown 文件
               </p>
             )}
           </div>

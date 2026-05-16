@@ -75,7 +75,7 @@ export default function BulkBookmarksAction() {
     toast({
       variant: "destructive",
       title: "出现了一些问题",
-      description: "There was a problem with your request.",
+      description: "处理请求时出现问题。",
     });
   };
 

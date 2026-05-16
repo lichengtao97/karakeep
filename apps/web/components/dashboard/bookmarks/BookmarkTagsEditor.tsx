@@ -15,14 +15,14 @@ export function BookmarkTagsEditor({
   const { mutate } = useUpdateBookmarkTags({
     onSuccess: () => {
       toast({
-        description: "Tags has been updated!",
+        description: "标签已更新。",
       });
     },
     onError: () => {
       toast({
         variant: "destructive",
         title: "出现了一些问题",
-        description: "There was a problem with your request.",
+        description: "处理请求时出现问题。",
       });
     },
   });

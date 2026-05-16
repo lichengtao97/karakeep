@@ -42,6 +42,7 @@
     "storage": "存储",
     "pdf": "已存档的 PDF",
     "default": "默认",
+    "untitled": "未命名",
     "id": "ID",
     "last_used": "上次使用"
   },
@@ -682,6 +683,7 @@
     "follow_us_on_x": "在 X 上关注我们"
   },
   "lists": {
+    "sidebar_title": "列表",
     "all_lists": "所有列表",
     "favourites": "收藏",
     "new_list": "新列表",
