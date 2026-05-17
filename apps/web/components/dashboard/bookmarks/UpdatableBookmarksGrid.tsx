@@ -12,6 +12,7 @@ import { BookmarkGridContextProvider } from "@karakeep/shared-react/hooks/bookma
 import { useTRPC } from "@karakeep/shared-react/trpc";
 
 import BookmarksGrid from "./BookmarksGrid";
+import BookmarksGridSkeleton from "./BookmarksGridSkeleton";
 
 export default function UpdatableBookmarksGrid({
   query,
@@ -19,7 +20,7 @@ export default function UpdatableBookmarksGrid({
   showEditorCard = false,
 }: {
   query: Omit<ZGetBookmarksRequest, "sortOrder" | "includeContent">; // Sort order is handled by the store
-  bookmarks: ZGetBookmarksResponse;
+  bookmarks?: ZGetBookmarksResponse;
   showEditorCard?: boolean;
   itemsPerPage?: number;
 }) {
@@ -35,15 +36,19 @@ export default function UpdatableBookmarksGrid({
 
   const finalQuery = { ...query, sortOrder, includeContent: false };
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending } =
     useInfiniteQuery(
       api.bookmarks.getBookmarks.infiniteQueryOptions(
         { ...finalQuery, useCursorV2: true },
         {
-          initialData: () => ({
-            pages: [initialBookmarks],
-            pageParams: [query.cursor ?? null],
-          }),
+          ...(initialBookmarks
+            ? {
+                initialData: () => ({
+                  pages: [initialBookmarks],
+                  pageParams: [query.cursor ?? null],
+                }),
+              }
+            : {}),
           initialCursor: null,
           getNextPageParam: (lastPage) => lastPage.nextCursor,
           refetchOnMount: false,
@@ -51,15 +56,18 @@ export default function UpdatableBookmarksGrid({
       ),
     );
 
-  const grid = (
-    <BookmarksGrid
-      bookmarks={data.pages.flatMap((b) => b.bookmarks)}
-      hasNextPage={hasNextPage}
-      fetchNextPage={fetchNextPage}
-      isFetchingNextPage={isFetchingNextPage}
-      showEditorCard={showEditorCard}
-    />
-  );
+  const grid =
+    isPending || !data ? (
+      <BookmarksGridSkeleton count={showEditorCard ? 8 : 10} />
+    ) : (
+      <BookmarksGrid
+        bookmarks={data.pages.flatMap((b) => b.bookmarks)}
+        hasNextPage={hasNextPage}
+        fetchNextPage={fetchNextPage}
+        isFetchingNextPage={isFetchingNextPage}
+        showEditorCard={showEditorCard}
+      />
+    );
 
   return (
     <BookmarkGridContextProvider query={finalQuery}>

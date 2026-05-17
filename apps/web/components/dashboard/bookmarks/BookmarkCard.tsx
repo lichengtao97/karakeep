@@ -9,6 +9,8 @@ import LinkCard from "./LinkCard";
 import TextCard from "./TextCard";
 import UnknownCard from "./UnknownCard";
 
+const LIST_CARD_REFRESH_WINDOW_MS = 10 * 60 * 1000;
+
 export default function BookmarkCard({
   bookmark: initialData,
   className,
@@ -17,27 +19,32 @@ export default function BookmarkCard({
   className?: string;
 }) {
   const api = useTRPC();
+  const isWithinListRefreshWindow =
+    Date.now().valueOf() - initialData.createdAt.valueOf() <
+    LIST_CARD_REFRESH_WINDOW_MS;
+  const initialRefreshInterval = getBookmarkRefreshInterval(initialData);
   const { data: bookmark } = useQuery(
     api.bookmarks.getBookmark.queryOptions(
       {
         bookmarkId: initialData.id,
       },
       {
+        enabled: initialRefreshInterval !== false && isWithinListRefreshWindow,
         initialData,
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
         refetchInterval: (query) => {
+          if (!isWithinListRefreshWindow) {
+            return false;
+          }
           const data = query.state.data;
           if (!data) {
             return false;
           }
           return getBookmarkRefreshInterval(data);
         },
-        refetchOnMount: (query) => {
-          const data = query.state.data;
-          if (!data) {
-            return true;
-          }
-          return getBookmarkRefreshInterval(data) !== false;
-        },
+        staleTime:
+          initialRefreshInterval === false ? Infinity : initialRefreshInterval,
       },
     ),
   );

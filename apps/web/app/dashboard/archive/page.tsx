@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Bookmarks from "@/components/dashboard/bookmarks/Bookmarks";
-import InfoTooltip from "@/components/ui/info-tooltip";
 import { useTranslation } from "@/lib/i18n/server";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -12,22 +11,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ArchivedBookmarkPage() {
-  // oxlint-disable-next-line rules-of-hooks
-  const { t } = await useTranslation();
-
-  return (
-    <Bookmarks
-      header={
-        <div className="flex gap-2">
-          <p className="text-2xl">🗄️ {String(t("common.archive"))}</p>
-          <InfoTooltip size={17} className="my-auto" variant="explain">
-            <p>已归档内容不会出现在主页中</p>
-          </InfoTooltip>
-        </div>
-      }
-      query={{ archived: true }}
-      showDivider={true}
-      showEditorCard={true}
-    />
-  );
+  return <Bookmarks query={{ archived: true }} showEditorCard={true} />;
 }

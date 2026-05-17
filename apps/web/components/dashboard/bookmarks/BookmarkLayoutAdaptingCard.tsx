@@ -18,6 +18,7 @@ import {
 import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import {
+  Calendar,
   Check,
   GripVertical,
   Image as ImageIcon,
@@ -301,11 +302,12 @@ function ListView({
     contain: "object-contain",
   });
   const note = showNotes ? bookmark.note?.trim() : undefined;
+  const summary = bookmark.summary?.trim();
 
   return (
     <div
       className={cn(
-        "group relative flex max-h-96 gap-4 overflow-hidden rounded-lg p-2",
+        "group relative flex min-h-28 gap-4 overflow-hidden bg-white px-5 py-4 transition-colors hover:bg-slate-50",
         className,
       )}
     >
@@ -316,17 +318,22 @@ function ListView({
         className="left-1 top-1/2 -translate-y-1/2"
       />
       <HoverActionBar bookmark={bookmark} />
-      <div className="flex size-32 items-center justify-center overflow-hidden">
-        {image("list", cn("size-32 rounded-lg", imgFitClass))}
+      <div className="mt-1 hidden size-5 shrink-0 rounded border border-slate-300 bg-white sm:block" />
+      <div className="flex h-20 w-36 shrink-0 items-center justify-center overflow-hidden rounded-md bg-slate-100">
+        {image("list", cn("size-full rounded-md", imgFitClass))}
       </div>
-      <div className="flex h-full flex-1 flex-col justify-between gap-2 overflow-hidden">
+      <div className="flex min-w-0 flex-1 flex-col justify-center gap-2 overflow-hidden">
         <div className="flex flex-col gap-2 overflow-hidden">
           {showTitle && title && (
-            <div className="line-clamp-2 flex-none shrink-0 overflow-hidden text-ellipsis break-words text-lg">
+            <div className="line-clamp-1 flex-none shrink-0 overflow-hidden text-ellipsis break-words text-base font-semibold text-slate-950">
               {title}
             </div>
           )}
-          {content && <div className="shrink-1 overflow-hidden">{content}</div>}
+          {(summary || content) && (
+            <div className="line-clamp-2 overflow-hidden text-sm leading-5 text-slate-500">
+              {summary ?? content}
+            </div>
+          )}
           {note && <NotePreview note={note} bookmarkId={bookmark.id} />}
           {showTags && (
             <div className="flex shrink-0 flex-wrap gap-1 overflow-hidden">
@@ -337,7 +344,24 @@ function ListView({
             </div>
           )}
         </div>
-        <BottomRow footer={footer} bookmark={bookmark} />
+      </div>
+      <div className="hidden w-72 shrink-0 items-center justify-between gap-4 text-sm text-slate-500 lg:flex">
+        <div className="min-w-0 space-y-3">
+          <div className="line-clamp-1 min-w-0">{footer}</div>
+          <Link
+            href={`/dashboard/preview/${bookmark.id}`}
+            suppressHydrationWarning
+            className="flex items-center gap-2"
+          >
+            <Calendar size={16} />
+            <BookmarkFormattedCreatedAt createdAt={bookmark.createdAt} />
+          </Link>
+        </div>
+        <div className="flex items-center gap-2 whitespace-nowrap">
+          <span className="size-2 rounded-full bg-blue-600" />
+          <span>未读</span>
+        </div>
+        <BookmarkActionBar bookmark={bookmark} />
       </div>
     </div>
   );

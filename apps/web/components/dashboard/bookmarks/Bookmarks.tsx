@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
+import ReadingLibraryHeader from "@/components/dashboard/ReadingLibraryHeader";
 import { Separator } from "@/components/ui/separator";
-import { api } from "@/server/api/client";
 import { getServerAuthSession } from "@/server/auth";
 
 import type { ZGetBookmarksRequest } from "@karakeep/shared/types/bookmarks";
@@ -23,19 +23,11 @@ export default async function Bookmarks({
     redirect("/");
   }
 
-  const bookmarks = await api.bookmarks.getBookmarks({
-    ...query,
-  });
-
   return (
-    <div className="flex flex-col gap-3">
-      {header}
+    <div className="flex flex-col gap-5">
+      {header === undefined ? <ReadingLibraryHeader /> : header}
       {showDivider && <Separator />}
-      <UpdatableBookmarksGrid
-        query={query}
-        bookmarks={bookmarks}
-        showEditorCard={showEditorCard}
-      />
+      <UpdatableBookmarksGrid query={query} showEditorCard={showEditorCard} />
     </div>
   );
 }

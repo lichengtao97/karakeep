@@ -18,7 +18,7 @@ export default async function Sidebar({
   const { t } = await useTranslation();
 
   return (
-    <aside className="flex h-[calc(100vh-64px)] w-60 flex-col gap-5 border-r p-4">
+    <aside className="flex h-[calc(100vh-64px)] w-72 flex-col gap-5 border-r border-slate-200 bg-white p-6">
       <div>
         <ul className="space-y-2 text-sm">
           {items(t).map((item) => (
@@ -27,6 +27,13 @@ export default async function Sidebar({
               logo={item.icon}
               name={item.name}
               path={item.path}
+              right={
+                item.count !== undefined ? (
+                  <span className="pr-3 text-xs font-medium text-slate-500">
+                    {item.count}
+                  </span>
+                ) : undefined
+              }
             />
           ))}
         </ul>

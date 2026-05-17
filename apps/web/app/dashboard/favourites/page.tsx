@@ -11,19 +11,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function FavouritesBookmarkPage() {
-  // oxlint-disable-next-line rules-of-hooks
-  const { t } = await useTranslation();
-
-  return (
-    <Bookmarks
-      header={
-        <div className="flex items-center justify-between">
-          <p className="text-2xl">⭐️ {String(t("lists.favourites"))}</p>
-        </div>
-      }
-      query={{ favourited: true }}
-      showDivider={true}
-      showEditorCard={true}
-    />
-  );
+  return <Bookmarks query={{ favourited: true }} showEditorCard={true} />;
 }

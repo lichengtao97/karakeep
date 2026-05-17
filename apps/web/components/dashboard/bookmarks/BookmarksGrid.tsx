@@ -8,6 +8,7 @@ import {
   useBookmarkLayout,
   useGridColumns,
 } from "@/lib/userLocalSettings/bookmarksLayout";
+import { cn } from "@/lib/utils";
 import tailwindConfig from "@/tailwind.config";
 import { Slot } from "@radix-ui/react-slot";
 import { ErrorBoundary } from "react-error-boundary";
@@ -23,8 +24,17 @@ import EditorCard from "./EditorCard";
 import UnknownCard from "./UnknownCard";
 
 function StyledBookmarkCard({ children }: { children: React.ReactNode }) {
+  const layout = useBookmarkLayout();
+
   return (
-    <Slot className="mb-4 border border-border bg-card duration-300 ease-in hover:shadow-lg hover:transition-all">
+    <Slot
+      className={cn(
+        "bg-card duration-300 ease-in hover:shadow-lg hover:transition-all",
+        layout === "list"
+          ? "border-b border-slate-100 last:border-b-0"
+          : "mb-4 border border-border",
+      )}
+    >
       {children}
     </Slot>
   );
@@ -134,7 +144,11 @@ export default function BookmarksGrid({
             {children}
           </Masonry>
         ),
-        list: <div className="grid grid-cols-1">{children}</div>,
+        list: (
+          <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+            {children}
+          </div>
+        ),
         compact: <div className="grid grid-cols-1">{children}</div>,
       })}
       {hasNextPage && (

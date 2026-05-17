@@ -6,7 +6,7 @@ const zBookmarkGridLayout = z.enum(["grid", "list", "masonry", "compact"]);
 export type BookmarksLayoutTypes = z.infer<typeof zBookmarkGridLayout>;
 
 export const zUserLocalSettings = z.object({
-  bookmarkGridLayout: zBookmarkGridLayout.optional().default("masonry"),
+  bookmarkGridLayout: zBookmarkGridLayout.optional().default("list"),
   lang: z.string().optional().default("zh"),
   gridColumns: z.number().min(1).max(6).optional().default(3),
   showNotes: z.boolean().optional().default(false),

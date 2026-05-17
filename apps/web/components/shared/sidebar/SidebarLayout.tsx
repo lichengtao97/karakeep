@@ -26,14 +26,14 @@ export default function SidebarLayout({
       <div className="flex min-h-[calc(100vh-64px)] w-full flex-col sm:h-[calc(100dvh-64px)] sm:flex-row sm:overflow-hidden">
         <ValidAccountCheck />
         <div className="hidden flex-none sm:flex">{sidebar}</div>
-        <main className="flex-1 bg-muted sm:min-h-0 sm:overflow-y-auto">
+        <main className="flex-1 bg-white sm:min-h-0 sm:overflow-y-auto">
           {serverConfig.demoMode && <DemoModeBanner />}
           <div className="block w-full sm:hidden">
             {mobileSidebar}
             <Separator />
           </div>
           {modal}
-          <div className="min-h-30 container p-4">
+          <div className="min-h-30 mx-auto w-full max-w-[1480px] px-6 py-6">
             <ErrorBoundary fallback={<ErrorFallback />}>
               <Suspense fallback={<LoadingSpinner />}>{children}</Suspense>
             </ErrorBoundary>

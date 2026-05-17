@@ -11,18 +11,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function UnreadBookmarkPage() {
-  // oxlint-disable-next-line rules-of-hooks
-  const { t } = await useTranslation();
-
   return (
     <Bookmarks
-      header={
-        <div className="flex items-center justify-between">
-          <p className="text-2xl">📖 {String(t("common.unread"))}</p>
-        </div>
-      }
       query={{ archived: false, readFilter: "unread" }}
-      showDivider={true}
       showEditorCard={true}
     />
   );

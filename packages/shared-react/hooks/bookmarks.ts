@@ -42,6 +42,8 @@ export function useCreateBookmark(
           api.bookmarks.searchBookmarks.pathFilter(),
         );
         queryClient.invalidateQueries(api.lists.stats.pathFilter());
+        queryClient.invalidateQueries(api.users.stats.pathFilter());
+        queryClient.invalidateQueries(api.tags.list.pathFilter());
         return opts?.onSuccess?.(res, req, meta, context);
       },
     }),
@@ -64,6 +66,8 @@ export function useCreateBookmarkWithPostHook(
         queryClient.invalidateQueries(
           api.bookmarks.searchBookmarks.pathFilter(),
         );
+        queryClient.invalidateQueries(api.users.stats.pathFilter());
+        queryClient.invalidateQueries(api.tags.list.pathFilter());
         await postCreationCB(res.id);
         return opts?.onSuccess?.(res, req, meta, context);
       },
@@ -94,6 +98,8 @@ export function useDeleteBookmark(
           api.bookmarks.getBookmark.queryFilter({ bookmarkId: req.bookmarkId }),
         );
         scheduleInvalidateQueries(queryClient, api.lists.stats.pathFilter());
+        scheduleInvalidateQueries(queryClient, api.users.stats.pathFilter());
+        scheduleInvalidateQueries(queryClient, api.tags.list.pathFilter());
         return opts?.onSuccess?.(res, req, meta, context);
       },
     }),
@@ -123,6 +129,7 @@ export function useUpdateBookmark(
           api.bookmarks.getBookmark.queryFilter({ bookmarkId: req.bookmarkId }),
         );
         scheduleInvalidateQueries(queryClient, api.lists.stats.pathFilter());
+        scheduleInvalidateQueries(queryClient, api.users.stats.pathFilter());
         return opts?.onSuccess?.(res, req, meta, context);
       },
     }),
@@ -201,6 +208,7 @@ export function useUpdateBookmarkTags(
         });
         scheduleInvalidateQueries(queryClient, api.tags.list.pathFilter());
         scheduleInvalidateQueries(queryClient, api.lists.stats.pathFilter());
+        scheduleInvalidateQueries(queryClient, api.users.stats.pathFilter());
         return opts?.onSuccess?.(res, req, meta, context);
       },
     }),

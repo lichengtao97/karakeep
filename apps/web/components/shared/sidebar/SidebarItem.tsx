@@ -38,10 +38,8 @@ export default function SidebarItem({
   return (
     <li
       className={cn(
-        "relative flex justify-between rounded-lg text-sm transition-colors hover:bg-accent",
-        path == currentPath
-          ? "bg-accent/50 text-foreground"
-          : "text-muted-foreground",
+        "relative flex min-h-11 items-center justify-between rounded-lg text-sm transition-colors hover:bg-blue-50",
+        path == currentPath ? "bg-blue-50 text-blue-600" : "text-slate-600",
         dropHighlight && "bg-accent ring-2 ring-primary",
         className,
       )}
@@ -55,8 +53,9 @@ export default function SidebarItem({
         {collapseButton}
         <Link
           href={path}
+          prefetch={false}
           className={cn(
-            "flex items-center gap-x-2 rounded-[inherit] px-3 py-2",
+            "flex items-center gap-x-3 rounded-[inherit] px-3 py-2 font-medium",
             linkClassName,
           )}
         >

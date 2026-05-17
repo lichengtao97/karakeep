@@ -1,9 +1,8 @@
 import { redirect } from "next/navigation";
-import AllLists from "@/components/dashboard/sidebar/AllLists";
+import DashboardSidebarInsights from "@/components/dashboard/DashboardSidebarInsights";
 import MobileSidebar from "@/components/shared/sidebar/MobileSidebar";
 import Sidebar from "@/components/shared/sidebar/Sidebar";
 import SidebarLayout from "@/components/shared/sidebar/SidebarLayout";
-import { Separator } from "@/components/ui/separator";
 import { ReaderSettingsProvider } from "@/lib/readerSettings";
 import { UserSettingsContextProvider } from "@/lib/userSettings";
 import { api } from "@/server/api/client";
@@ -14,11 +13,11 @@ import {
   Archive,
   BookOpen,
   ClipboardList,
+  CheckCircle2,
   Highlighter,
-  History,
-  Home,
+  Inbox,
   Search,
-  Tag,
+  Star,
 } from "lucide-react";
 
 import { PluginManager, PluginType } from "@karakeep/shared/plugins";
@@ -36,10 +35,7 @@ export default async function Dashboard({
     redirect("/");
   }
 
-  const [lists, userSettings] = await Promise.all([
-    tryCatch(api.lists.list()),
-    tryCatch(api.users.settings()),
-  ]);
+  const userSettings = await tryCatch(api.users.settings());
 
   if (userSettings.error) {
     if (userSettings.error instanceof TRPCError) {
@@ -53,16 +49,37 @@ export default async function Dashboard({
     throw userSettings.error;
   }
 
-  if (lists.error) {
-    throw lists.error;
-  }
-
   const items = (t: TFunction) =>
     [
       {
-        name: t("common.home"),
-        icon: <Home size={18} />,
+        name: "全部",
+        icon: <Inbox size={18} />,
         path: "/dashboard/bookmarks",
+      },
+      {
+        name: t("lists.favourites"),
+        icon: <Star size={18} />,
+        path: "/dashboard/favourites",
+      },
+      {
+        name: t("common.unread"),
+        icon: <BookOpen size={18} />,
+        path: "/dashboard/unread",
+      },
+      {
+        name: "已读",
+        icon: <CheckCircle2 size={18} />,
+        path: "/dashboard/recently-read",
+      },
+      {
+        name: "高亮",
+        icon: <Highlighter size={18} />,
+        path: "/dashboard/highlights",
+      },
+      {
+        name: t("common.archive"),
+        icon: <Archive size={18} />,
+        path: "/dashboard/archive",
       },
       PluginManager.isRegistered(PluginType.Search)
         ? [
@@ -73,31 +90,6 @@ export default async function Dashboard({
             },
           ]
         : [],
-      {
-        name: t("common.unread"),
-        icon: <BookOpen size={18} />,
-        path: "/dashboard/unread",
-      },
-      {
-        name: t("common.recently_read"),
-        icon: <History size={18} />,
-        path: "/dashboard/recently-read",
-      },
-      {
-        name: t("common.tags"),
-        icon: <Tag size={18} />,
-        path: "/dashboard/tags",
-      },
-      {
-        name: t("common.highlights"),
-        icon: <Highlighter size={18} />,
-        path: "/dashboard/highlights",
-      },
-      {
-        name: t("common.archive"),
-        icon: <Archive size={18} />,
-        path: "/dashboard/archive",
-      },
     ].flat();
 
   const mobileSidebar = (t: TFunction) => [
@@ -116,12 +108,7 @@ export default async function Dashboard({
           sidebar={
             <Sidebar
               items={items}
-              extraSections={
-                <>
-                  <Separator />
-                  <AllLists initialData={lists.data} />
-                </>
-              }
+              extraSections={<DashboardSidebarInsights />}
             />
           }
           mobileSidebar={<MobileSidebar items={mobileSidebar} />}
